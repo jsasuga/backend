@@ -79,3 +79,11 @@ docker build -t relevic-backend .
 docker run -p80:3000 relevic-backend
 docker stop *ps*
 ```
+
+## New Module
+
+```
+nest g mo api/role && nest g co api/role --no-spec && nest g s api/role --no-spec
+touch src/api/role/role.dto.ts
+touch src/api/role/role.entity.ts
+```
