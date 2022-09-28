@@ -10,12 +10,12 @@ import { ApiModule } from './api/api.module';
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({ envFilePath, isGlobal: true }),
-        TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
-        ApiModule,
-    ],
-    controllers: [AppController],
-    providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    ApiModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -29,7 +29,7 @@ export class AuthHelper {
   // Generate JWT Token
   public generateToken(user: User): string {
     return this.jwt.sign({ id: user.id, email: user.email });
-  } 
+  }
 
   // Validate User's password
   public isPasswordValid(password: string, userPassword: string): boolean {
@@ -45,7 +45,6 @@ export class AuthHelper {
 
   // Validate JWT Token, throw forbidden error if JWT Token is invalid
   private async validate(token: string): Promise<boolean | never> {
-    console.log(token)
     const decoded: unknown = this.jwt.verify(token);
 
     if (!decoded) {
