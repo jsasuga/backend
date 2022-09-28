@@ -14,7 +14,6 @@ async function bootstrap() {
         .setTitle('Relevic Backend')
         .setDescription('API')
         .setVersion('1.0')
-        .addTag('users')
         .build();
 
     const document = SwaggerModule.createDocument(app, swaggerConfig);

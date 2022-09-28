@@ -12,7 +12,6 @@ export class UserService {
 
     public async updateName(body: UpdateNameDto, req: Request): Promise<User> {
         const user: User = <User>req.user;
-
         user.name = body.name;
 
         return this.repository.save(user);
