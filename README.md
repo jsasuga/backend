@@ -77,4 +77,5 @@ Nest is [MIT licensed](LICENSE).
 ```
 docker build -t relevic-backend .
 docker run -p80:3000 relevic-backend
+docker stop *ps*
 ```

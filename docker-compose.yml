@@ -1,0 +1,12 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    env_file:
+    - ./src/common/envs/development.env
+    # Run a command against the development stage of the image
+    command: yarn run start:dev
+    ports:
+      - 3000:3000
