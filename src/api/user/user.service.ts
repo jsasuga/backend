@@ -23,6 +23,8 @@ export class UserService {
   }
 
   public async fetch(id: string): Promise<User> {
-    return this.repository.findOne(id);
+    return this.repository.findOne(id, {
+      relations: ["role", "role.permissions"]
+    });
   }
 }

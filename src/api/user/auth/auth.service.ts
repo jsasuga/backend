@@ -4,6 +4,7 @@ import { User } from '@/api/user/user.entity';
 import { Repository } from 'typeorm';
 import { RegisterDto, LoginDto } from './auth.dto';
 import { AuthHelper } from './auth.helper';
+import { Role } from '@/api/role/role.entity';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +14,8 @@ export class AuthService {
   @Inject(AuthHelper)
   private readonly helper: AuthHelper;
 
+  constructor(@InjectRepository(Role) private roleRepository: Repository<Role>) {}
+
   public async register(body: RegisterDto): Promise<User | never> {
     const { name, email, password }: RegisterDto = body;
     let user: User = await this.repository.findOne({ where: { email } });
@@ -21,18 +24,23 @@ export class AuthService {
       throw new HttpException('Conflict', HttpStatus.CONFLICT);
     }
 
+    let role: Role = await this.roleRepository.findOne(body.roleId);
+    if (!role) {
+      throw new HttpException('Invalid role id', HttpStatus.BAD_REQUEST);
+    }
     user = new User();
 
     user.name = name;
     user.email = email;
     user.password = this.helper.encodePassword(password);
+    user.role = role;
 
     return this.repository.save(user);
   }
 
   public async login(body: LoginDto): Promise<string | never> {
     const { email, password }: LoginDto = body;
-    const user: User = await this.repository.findOne({ where: { email } });
+    const user: User = await this.repository.findOne({ where: { email }, relations: ["role", "role.permissions"] });
 
     if (!user) {
       throw new HttpException('No user found', HttpStatus.NOT_FOUND);

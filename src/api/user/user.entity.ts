@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from '../role/role.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -23,4 +24,8 @@ export class User extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true, default: null })
   @ApiProperty()
   public lastLoginAt: Date | null;
+
+  @ManyToOne(() => Role)
+  @ApiProperty()
+  public role: Role;
 }
