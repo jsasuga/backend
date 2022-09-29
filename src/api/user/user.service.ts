@@ -17,4 +17,12 @@ export class UserService {
 
     return this.repository.save(user);
   }
+
+  public async list(req: Request): Promise<Array<User>> {
+    return this.repository.find();
+  }
+
+  public async fetch(id: string): Promise<User> {
+    return this.repository.findOne(id);
+  }
 }
