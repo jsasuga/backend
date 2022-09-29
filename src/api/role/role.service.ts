@@ -5,12 +5,13 @@ import { Request } from 'express';
 import { CreateRoleDto, UpdateRoleDto, UpdateRolePermissionsDto } from './role.dto';
 import { Role } from './role.entity';
 import { Module } from '../module/module.entity';
-import { ModuleService } from '../module/module.service';
 
 @Injectable()
 export class RoleService {
   @InjectRepository(Role)
   private readonly repository: Repository<Role>;
+
+  constructor(@InjectRepository(Module) private moduleRepository: Repository<Module>) {}
 
   public async create(body: CreateRoleDto): Promise<Role> {
     let role: Role = new Role;
@@ -26,7 +27,9 @@ export class RoleService {
   }
 
   public async fetch(id: string): Promise<Role> {
-    return this.repository.findOne(id);
+    return this.repository.findOne(id, {
+      relations: ["permissions"]
+    });
   }
 
   public async update (id: string, body: UpdateRoleDto): Promise<Role> {
@@ -47,7 +50,12 @@ export class RoleService {
     const permissions: Array<number> = body.modules;
     let role: Role = await this.repository.findOne(id);
     
-    // role.permissions = modules;
+    let modulePromises = permissions.map(p => {
+      let m = this.moduleRepository.findOne(p);
+      return m
+    })
+    const modules = await Promise.all(modulePromises)
+    role.permissions = modules;
   
     return this.repository.save(role);
   }
