@@ -11,8 +11,8 @@ async function bootstrap() {
   const port: number = config.get<number>('PORT');
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('RELEVIC')
+    .setDescription('')
     .setVersion('1.0')
     .addTag('auth')
     .addTag('users')
