@@ -30,6 +30,11 @@ export class RoleController {
   @Get()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Role,
+    isArray: true,
+  })
   private list(@Req() req: Request): Promise<Array<Role> | never> {
     return this.service.list(req);
   }
@@ -37,6 +42,10 @@ export class RoleController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Role,
+  })
   private fetch(@Param('id') id: string, @Req() req: Request): Promise<Role | never> {
     return this.service.fetch(id);
   }
@@ -44,6 +53,10 @@ export class RoleController {
   @Put(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Role,
+  })
   private update(@Param('id') id: string, @Body() body: UpdateRoleDto, @Req() req: Request): Promise<Role | never> {
     return this.service.update(id, body);
   }
@@ -51,6 +64,10 @@ export class RoleController {
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Role,
+  })
   async delete(@Param('id') id: string, @Req() req: Request): Promise<Role | never> {
     return this.service.delete(id)
   }

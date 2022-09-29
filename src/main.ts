@@ -14,6 +14,7 @@ async function bootstrap() {
     .setTitle('Cats example')
     .setDescription('The cats API description')
     .setVersion('1.0')
+    .addTag('auth')
     .addTag('users')
     .addTag('roles')
     .addTag('modules')
