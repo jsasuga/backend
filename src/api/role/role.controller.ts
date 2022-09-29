@@ -6,7 +6,7 @@ import {
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
-import { UpdateRoleDto, CreateRoleDto } from './role.dto';
+import { UpdateRoleDto, CreateRoleDto, UpdateRolePermissionsDto } from './role.dto';
 import { Role } from './role.entity';
 import { RoleService } from './role.service';
 
@@ -59,6 +59,17 @@ export class RoleController {
   })
   private update(@Param('id') id: string, @Body() body: UpdateRoleDto, @Req() req: Request): Promise<Role | never> {
     return this.service.update(id, body);
+  }
+
+  @Put(':id/permissions')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Role,
+  })
+  private updatePermissions(@Param('id') id: string, @Body() body: UpdateRolePermissionsDto, @Req() req: Request): Promise<Role | never> {
+    return this.service.updatePermissions(id, body);
   }
 
   @Delete(':id')

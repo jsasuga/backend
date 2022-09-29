@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
-import { CreateRoleDto, UpdateRoleDto } from './role.dto';
+import { CreateRoleDto, UpdateRoleDto, UpdateRolePermissionsDto } from './role.dto';
 import { Role } from './role.entity';
+import { Module } from '../module/module.entity';
+import { ModuleService } from '../module/module.service';
 
 @Injectable()
 export class RoleService {
@@ -39,5 +41,14 @@ export class RoleService {
   public async delete (id: string): Promise<Role> {
     let role: Role = await this.repository.findOne(id);
     return role.softRemove();
+  }
+
+  public async updatePermissions(id: string, body: UpdateRolePermissionsDto): Promise<Role> {
+    const permissions: Array<number> = body.modules;
+    let role: Role = await this.repository.findOne(id);
+    
+    // role.permissions = modules;
+  
+    return this.repository.save(role);
   }
 }

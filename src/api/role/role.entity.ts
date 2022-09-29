@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Module } from '../module/module.entity';
 
 @Entity()
 export class Role extends BaseEntity {
@@ -14,4 +15,9 @@ export class Role extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public description: string | null;
+
+  @ManyToMany(() => Module)
+  @JoinTable()
+  @ApiProperty()
+  public permissions: Module[]
 }
