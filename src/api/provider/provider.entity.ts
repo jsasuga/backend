@@ -1,8 +1,9 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Province } from '../province/province.entity';
 import { ServiceType } from '../service-type/service-type.entity';
 import { ProviderAreas } from '../provider-areas/provider-areas.entity';
+import { Branch } from '../branch/branch.entity';
 
 @Entity()
 export class Provider extends BaseEntity {
@@ -54,4 +55,9 @@ export class Provider extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public networkNeeds: string | null;
+
+  @OneToMany(() => Branch, (branch) => branch.provider)
+  @JoinTable()
+  @ApiProperty()
+  public branches: Branch[]
 }

@@ -19,6 +19,7 @@ async function bootstrap() {
     .addTag('roles')
     .addTag('modules')
     .addTag('provider')
+    .addTag('branch')
     .addTag('service-type')
     .addTag('province')
     .addTag('provider-areas')

@@ -7,9 +7,10 @@ import { Province } from '../province/province.entity';
 import { ServiceType } from '../service-type/service-type.entity';
 import { ProviderAreas } from '../provider-areas/provider-areas.entity';
 import { ProviderService } from './provider.service';
+import { Branch } from '../branch/branch.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Provider, Province, ServiceType, ProviderAreas]), AuthModule],
+  imports: [TypeOrmModule.forFeature([Provider, Province, ServiceType, ProviderAreas, Branch]), AuthModule],
   controllers: [ProviderController],
   providers: [ProviderService]
 })

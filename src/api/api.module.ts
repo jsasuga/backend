@@ -6,8 +6,9 @@ import { ServiceTypeModule } from './service-type/service-type.module';
 import { ProvinceModule } from './province/province.module';
 import { ProviderModule } from './provider/provider.module';
 import { ProviderAreasModule } from './provider-areas/provider-areas.module';
+import { BranchModule } from './branch/branch.module';
 
 @Module({
-  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule]
+  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule]
 })
 export class ApiModule {}
