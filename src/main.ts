@@ -25,7 +25,7 @@ async function bootstrap() {
     .addTag('provider-areas')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('', app, document);
 
   app.set('trust proxy', 1);
   app.enableCors();

@@ -57,7 +57,7 @@ export class Provider extends BaseEntity {
   public networkNeeds: string | null;
 
   @OneToMany(() => Branch, (branch) => branch.provider)
-  @JoinTable()
   @ApiProperty()
-  public branches: Branch[]
+  @JoinTable()
+  branches: Branch[]
 }

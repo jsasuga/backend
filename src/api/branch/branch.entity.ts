@@ -1,6 +1,7 @@
 import { BaseEntity, Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Provider } from '../provider/provider.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Branch extends BaseEntity {
@@ -37,7 +38,7 @@ export class Branch extends BaseEntity {
   public longitude: number | null;
 
   @ManyToOne(() => Provider, (provider) => provider.branches)
+  @Exclude()
   @JoinTable()
-  @ApiProperty()
-  public provider: Provider;
+  provider: Provider;
 }
