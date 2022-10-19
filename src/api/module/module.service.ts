@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
@@ -29,7 +29,9 @@ export class ModuleService {
 
   public async update (id: string, body: UpdateModuleDto): Promise<Module> {
     let module: Module = await this.repository.findOne(id);
-
+    if (!module) {
+      throw new HttpException('Invalid module id', HttpStatus.NOT_FOUND);
+    }
     module.name = body.name ? body.name : module.name;
     module.description = body.description ? body.description : module.description;
     

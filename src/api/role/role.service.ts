@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
@@ -34,7 +34,9 @@ export class RoleService {
 
   public async update (id: string, body: UpdateRoleDto): Promise<Role> {
     let role: Role = await this.repository.findOne(id);
-
+    if (!role) {
+      throw new HttpException('Invalid role id', HttpStatus.NOT_FOUND);
+    }
     role.name = body.name ? body.name : role.name;
     role.description = body.description ? body.description : role.description;
     

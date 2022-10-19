@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
@@ -29,7 +29,9 @@ export class ProvinceService {
 
   public async update (id: string, body: UpdateProvinceDto): Promise<Province> {
     let obj: Province = await this.repository.findOne(id);
-
+    if (!obj) {
+      throw new HttpException('Invalid Province id', HttpStatus.NOT_FOUND);
+    }
     obj.name = body.name ? body.name : obj.name;
     obj.description = body.description ? body.description : obj.description;
     

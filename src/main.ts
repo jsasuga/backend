@@ -18,8 +18,10 @@ async function bootstrap() {
     .addTag('users')
     .addTag('roles')
     .addTag('modules')
+    .addTag('provider')
     .addTag('service-type')
     .addTag('province')
+    .addTag('provider-areas')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);

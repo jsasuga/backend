@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
@@ -29,7 +29,9 @@ export class ServiceTypeService {
 
   public async update (id: string, body: UpdateServiceTypeDto): Promise<ServiceType> {
     let obj: ServiceType = await this.repository.findOne(id);
-
+    if (!obj) {
+      throw new HttpException('Invalid ServiceType id', HttpStatus.NOT_FOUND);
+    }
     obj.name = body.name ? body.name : obj.name;
     obj.description = body.description ? body.description : obj.description;
     
