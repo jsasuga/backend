@@ -74,7 +74,7 @@ export class ProviderService {
 
   public async fetch(id: string): Promise<Provider> {
     return this.repository.findOne(id, {
-      relations: []
+      relations: ["province", "serviceType", "providerAreas"]
     });
   }
 
