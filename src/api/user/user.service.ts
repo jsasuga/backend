@@ -19,7 +19,9 @@ export class UserService {
   }
 
   public async list(req: Request): Promise<Array<User>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["role"]
+    });
   }
 
   public async fetch(id: string): Promise<User> {
