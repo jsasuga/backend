@@ -48,9 +48,9 @@ export class Provider extends BaseEntity {
   public providerAreas: ProviderAreas
 
   // Provider network
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'integer', nullable: true })
   @ApiProperty()
-  public networkInterest: string | null;
+  public networkInterest: number | null;
 
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty()

@@ -38,10 +38,10 @@ export class CreateProviderDto {
   @ApiProperty()
   public readonly providerAreaId: number;
 
-  @IsString()
+  @IsNumber()
   @ApiProperty()
   @IsOptional()
-  public readonly networkInterest?: string;
+  public readonly networkInterest?: number;
 
   @IsString()
   @ApiProperty()
@@ -90,10 +90,10 @@ export class UpdateProviderDto {
     @IsOptional()
     public readonly providerAreaId?: number;
   
-    @IsString()
+    @IsNumber()
     @ApiProperty()
     @IsOptional()
-    public readonly networkInterest?: string;
+    public readonly networkInterest?: number;
   
     @IsString()
     @ApiProperty()
