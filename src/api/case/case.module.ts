@@ -11,9 +11,10 @@ import { DemographicForm } from '../demographic-form/demographic-form.entity';
 import { SurvivorEvaluation } from '../survivor-evaluation/survivor-evaluation.entity';
 import { AttentionProtocol } from '../attention-protocol/attention-protocol.entity';
 import { FollowUpNote } from '../follow-up-note/follow-up-note.entity';
+import { Province } from '../province/province.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Case, User, Provider, Victim, DemographicForm, SurvivorEvaluation, AttentionProtocol, FollowUpNote]), AuthModule],
+  imports: [TypeOrmModule.forFeature([Case, User, Provider, Victim, DemographicForm, SurvivorEvaluation, AttentionProtocol, FollowUpNote, Province]), AuthModule],
   controllers: [CaseController],
   providers: [CaseService]
 })

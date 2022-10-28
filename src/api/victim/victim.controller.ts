@@ -8,7 +8,7 @@ import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
 import { VictimService } from './victim.service';
 import { Victim } from './victim.entity';
-import { VictimDto } from './victim.dto';
+import { CreateVictimDto, UpdateVictimDto } from './victim.dto';
 
 @ApiBearerAuth()
 @ApiTags('victim')
@@ -23,7 +23,7 @@ export class VictimController {
     status: 200,
     type: Victim,
   })
-  private register(@Body() body: VictimDto): Promise<Victim | never> {
+  private register(@Body() body: CreateVictimDto): Promise<Victim | never> {
     return this.service.create(body);
   }
 
@@ -57,7 +57,7 @@ export class VictimController {
     status: 200,
     type: Victim,
   })
-  private update(@Param('id') id: string, @Body() body: VictimDto, @Req() req: Request): Promise<Victim | never> {
+  private update(@Param('id') id: string, @Body() body: UpdateVictimDto, @Req() req: Request): Promise<Victim | never> {
     return this.service.update(id, body);
   }
 

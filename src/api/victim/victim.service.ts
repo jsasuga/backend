@@ -3,14 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
 import { Victim } from './victim.entity';
-import { VictimDto } from './victim.dto';
+import { CreateVictimDto, UpdateVictimDto } from './victim.dto';
 
 @Injectable()
 export class VictimService {
   @InjectRepository(Victim)
   private readonly repository: Repository<Victim>;
   
-  public async create(body: VictimDto): Promise<Victim> {
+  public async create(body: CreateVictimDto): Promise<Victim> {
     let victim: Victim = new Victim;
     let vv: Victim = await this.repository.findOne({ where: { id: body.id } });
 
@@ -49,7 +49,7 @@ export class VictimService {
     return this.repository.findOne(id);
   }
 
-  public async update (id: string, body: VictimDto): Promise<Victim> {
+  public async update (id: string, body: UpdateVictimDto): Promise<Victim> {
     let victim: Victim = await this.repository.findOne(id);
     if (!victim) {
       throw new HttpException('Invalid module id', HttpStatus.NOT_FOUND);
