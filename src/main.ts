@@ -25,6 +25,7 @@ async function bootstrap() {
     .addTag('provider-areas')
     .addTag('victim')
     .addTag('demographic-form')
+    .addTag('survivor-evaluation')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('', app, document);

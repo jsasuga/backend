@@ -6,24 +6,24 @@ import {
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
-import { DemographicFormService } from './demographic-form.service';
-import { DemographicForm } from './demographic-form.entity';
-import { CreateDemographicFormDto, UpdateDemographicFormDto } from './demographic-form.dto';
+import { SurvivorEvaluationService } from './survivor-evaluation.service';
+import { SurvivorEvaluation } from './survivor-evaluation.entity';
+import { CreateSurvivorEvaluationDto, UpdateSurvivorEvaluationDto } from './survivor-evaluation.dto';
 
 @ApiBearerAuth()
-@ApiTags('demographic-form')
-@Controller('demographic-form')
-export class DemographicFormController {
-  @Inject(DemographicFormService)
-  private readonly service: DemographicFormService;
-  
+@ApiTags('survivor-evaluation')
+@Controller('survivor-evaluation')
+export class SurvivorEvaluationController {
+  @Inject(SurvivorEvaluationService)
+  private readonly service: SurvivorEvaluationService;
+
   @Post('')
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: DemographicForm,
+    type: SurvivorEvaluation,
   })
-  private register(@Body() body: CreateDemographicFormDto): Promise<DemographicForm | never> {
+  private register(@Body() body: CreateSurvivorEvaluationDto): Promise<SurvivorEvaluation | never> {
     return this.service.create(body);
   }
 
@@ -32,9 +32,9 @@ export class DemographicFormController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: DemographicForm,
+    type: SurvivorEvaluation,
   })
-  private update(@Param('id') id: string, @Body() body: UpdateDemographicFormDto, @Req() req: Request): Promise<DemographicForm> {
+  private update(@Param('id') id: string, @Body() body: UpdateSurvivorEvaluationDto, @Req() req: Request): Promise<SurvivorEvaluation> {
     return this.service.update(id, body);
   }
 
@@ -43,10 +43,10 @@ export class DemographicFormController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: DemographicForm,
+    type: SurvivorEvaluation,
     isArray: true,
   })
-  private list(@Req() req: Request): Promise<Array<DemographicForm> | never> {
+  private list(@Req() req: Request): Promise<Array<SurvivorEvaluation> | never> {
     return this.service.list(req);
   }
 
@@ -55,9 +55,9 @@ export class DemographicFormController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: DemographicForm,
+    type: SurvivorEvaluation,
   })
-  private fetch(@Param('id') id: string, @Req() req: Request): Promise<DemographicForm | never> {
+  private fetch(@Param('id') id: string, @Req() req: Request): Promise<SurvivorEvaluation | never> {
     return this.service.fetch(id);
   }
 
@@ -66,10 +66,10 @@ export class DemographicFormController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: DemographicForm,
+    type: SurvivorEvaluation,
     isArray: true,
   })
-  private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<DemographicForm> | never> {
+  private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<SurvivorEvaluation> | never> {
     return this.service.listByUserId(id);
   }
 }

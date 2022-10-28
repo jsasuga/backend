@@ -9,8 +9,9 @@ import { ProviderAreasModule } from './provider-areas/provider-areas.module';
 import { BranchModule } from './branch/branch.module';
 import { VictimModule } from './victim/victim.module';
 import { DemographicFormModule } from './demographic-form/demographic-form.module';
+import { SurvivorEvaluationModule } from './survivor-evaluation/survivor-evaluation.module';
 
 @Module({
-  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule]
+  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule]
 })
 export class ApiModule {}
