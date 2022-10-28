@@ -62,7 +62,7 @@ export class SurvivorEvaluationService {
     object.userInCharge = user;
     object.provider = provider;
     object.province = province;
-    // object.case = body.participation;
+    // object.case = case;
 
     return this.repository.save(object);
   }

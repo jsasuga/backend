@@ -10,8 +10,9 @@ import { BranchModule } from './branch/branch.module';
 import { VictimModule } from './victim/victim.module';
 import { DemographicFormModule } from './demographic-form/demographic-form.module';
 import { SurvivorEvaluationModule } from './survivor-evaluation/survivor-evaluation.module';
+import { AttentionProtocolModule } from './attention-protocol/attention-protocol.module';
 
 @Module({
-  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule]
+  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule, AttentionProtocolModule]
 })
 export class ApiModule {}

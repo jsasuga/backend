@@ -6,24 +6,24 @@ import {
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
-import { SurvivorEvaluationService } from './survivor-evaluation.service';
-import { SurvivorEvaluation } from './survivor-evaluation.entity';
-import { CreateSurvivorEvaluationDto, UpdateSurvivorEvaluationDto } from './survivor-evaluation.dto';
+import { AttentionProtocol } from './attention-protocol.entity';
+import { AttentionProtocolService } from './attention-protocol.service';
+import { CreateAttentionProtocolDto, UpdateAttentionProtocolDto } from './attention-protocol.dto';
 
 @ApiBearerAuth()
-@ApiTags('survivor-evaluation')
-@Controller('survivor-evaluation')
-export class SurvivorEvaluationController {
-  @Inject(SurvivorEvaluationService)
-  private readonly service: SurvivorEvaluationService;
+@ApiTags('attention-protocol')
+@Controller('attention-protocol')
+export class AttentionProtocolController {
+  @Inject(AttentionProtocolService)
+  private readonly service: AttentionProtocolService;
 
   @Post('')
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: SurvivorEvaluation,
+    type: AttentionProtocol,
   })
-  private register(@Body() body: CreateSurvivorEvaluationDto): Promise<SurvivorEvaluation | never> {
+  private register(@Body() body: CreateAttentionProtocolDto): Promise<AttentionProtocol | never> {
     return this.service.create(body);
   }
 
@@ -32,9 +32,9 @@ export class SurvivorEvaluationController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: SurvivorEvaluation,
+    type: AttentionProtocol,
   })
-  private update(@Param('id') id: string, @Body() body: UpdateSurvivorEvaluationDto, @Req() req: Request): Promise<SurvivorEvaluation> {
+  private update(@Param('id') id: string, @Body() body: UpdateAttentionProtocolDto, @Req() req: Request): Promise<AttentionProtocol> {
     return this.service.update(id, body);
   }
 
@@ -43,10 +43,10 @@ export class SurvivorEvaluationController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: SurvivorEvaluation,
+    type: AttentionProtocol,
     isArray: true,
   })
-  private list(@Req() req: Request): Promise<Array<SurvivorEvaluation> | never> {
+  private list(@Req() req: Request): Promise<Array<AttentionProtocol> | never> {
     return this.service.list(req);
   }
 
@@ -55,9 +55,9 @@ export class SurvivorEvaluationController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: SurvivorEvaluation,
+    type: AttentionProtocol,
   })
-  private fetch(@Param('id') id: string, @Req() req: Request): Promise<SurvivorEvaluation | never> {
+  private fetch(@Param('id') id: string, @Req() req: Request): Promise<AttentionProtocol | never> {
     return this.service.fetch(id);
   }
 
@@ -66,10 +66,10 @@ export class SurvivorEvaluationController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
-    type: SurvivorEvaluation,
+    type: AttentionProtocol,
     isArray: true,
   })
-  private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<SurvivorEvaluation> | never> {
+  private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<AttentionProtocol> | never> {
     return this.service.listByUserId(id);
   }
 }

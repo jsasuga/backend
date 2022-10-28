@@ -61,7 +61,7 @@ export class DemographicFormController {
     return this.service.fetch(id);
   }
 
-  @Get('provider/:userId')
+  @Get('user/:userId')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
