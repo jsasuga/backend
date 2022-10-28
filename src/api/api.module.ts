@@ -12,8 +12,9 @@ import { DemographicFormModule } from './demographic-form/demographic-form.modul
 import { SurvivorEvaluationModule } from './survivor-evaluation/survivor-evaluation.module';
 import { AttentionProtocolModule } from './attention-protocol/attention-protocol.module';
 import { FollowUpNoteModule } from './follow-up-note/follow-up-note.module';
+import { CaseModule } from './case/case.module';
 
 @Module({
-  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule, AttentionProtocolModule, FollowUpNoteModule]
+  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule, AttentionProtocolModule, FollowUpNoteModule, CaseModule]
 })
 export class ApiModule {}

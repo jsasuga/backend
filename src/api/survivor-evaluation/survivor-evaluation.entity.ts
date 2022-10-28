@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
 import { Province } from '../province/province.entity';
 import { Provider } from '../provider/provider.entity';
+import { Case } from '../case/case.entity';
 
 @Entity()
 export class SurvivorEvaluation extends BaseEntity {
@@ -101,8 +102,4 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public userInCharge: User
 
-//  @ManyToOne(() => Case)
-//  @JoinTable()
-//  @ApiProperty()
-//  public case: Case;
 }

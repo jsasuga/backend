@@ -1,11 +1,7 @@
 import { IsBoolean, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateAttentionProtocolDto {    
-    @IsNumber()
-    @ApiProperty()
-	public readonly caseId: number;
-
+export class CreateAttentionProtocolDto {
     @IsString()
     @ApiProperty()
     public readonly data: string;

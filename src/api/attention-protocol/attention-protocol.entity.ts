@@ -60,9 +60,4 @@ export class AttentionProtocol extends BaseEntity {
   @JoinTable()
   @ApiProperty()
   public userInCharge: User
-
-//  @ManyToOne(() => Case)
-//  @JoinTable()
-//  @ApiProperty()
-//  public case: Case;
 }

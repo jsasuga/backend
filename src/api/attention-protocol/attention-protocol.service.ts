@@ -13,7 +13,6 @@ export class AttentionProtocolService {
 
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    //@InjectRepository(Case) private caseRepository: Repository<Case>,
   ) {}
 
 
@@ -24,11 +23,6 @@ export class AttentionProtocolService {
     if (!user) {
       throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
     }
-
-    // let case: Case = await this.caseRepository.findOne(body.caseId);
-    // if (!case) {
-    //  throw new HttpException('Invalid case id', HttpStatus.BAD_REQUEST);
-    // }
 
     object.data = body.data;
     object.confidentiality = body.confidentiality;
@@ -44,7 +38,6 @@ export class AttentionProtocolService {
     object.comments = body.comments;
 
     object.userInCharge = user;
-    // object.case = case;
 
     return this.repository.save(object);
   }

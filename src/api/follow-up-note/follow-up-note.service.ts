@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { FollowUpNote } from './follow-up-note.entity';
 import { User } from '../user/user.entity';
 import { CreateFollowUpNoteDto, UpdateFollowUpNoteDto } from './follow-up-note.dto';
+import { Case } from '../case/case.entity';
 
 @Injectable()
 export class FollowUpNoteService {
@@ -13,7 +14,7 @@ export class FollowUpNoteService {
 
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    //@InjectRepository(Case) private caseRepository: Repository<Case>,
+    @InjectRepository(Case) private caseRepository: Repository<Case>,
   ) {}
 
   public async create(body: CreateFollowUpNoteDto): Promise<FollowUpNote> {
@@ -24,10 +25,10 @@ export class FollowUpNoteService {
       throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
     }
 
-    // let case: Case = await this.caseRepository.findOne(body.caseId);
-    // if (!case) {
-    //  throw new HttpException('Invalid case id', HttpStatus.BAD_REQUEST);
-    // }
+    let case1: Case = await this.caseRepository.findOne(body.caseId);
+    if (!case1) {
+      throw new HttpException('Invalid case id', HttpStatus.BAD_REQUEST);
+    }
 
     object.description = body.description;
     object.victimThoughts = body.victimThoughts;
@@ -39,7 +40,7 @@ export class FollowUpNoteService {
     object.evaluatorPlan = body.evaluatorPlan;
 
     object.userInCharge = user;
-    // object.case = case;
+    object.case = case1;
 
     return this.repository.save(object);
   }

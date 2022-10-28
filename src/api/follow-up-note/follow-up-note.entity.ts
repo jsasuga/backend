@@ -1,6 +1,8 @@
 import { BaseEntity, Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
+import { Case } from '../case/case.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class FollowUpNote extends BaseEntity {
@@ -45,8 +47,8 @@ export class FollowUpNote extends BaseEntity {
   @ApiProperty()
   public userInCharge: User;
 
-//  @ManyToOne(() => Case)
-//  @JoinTable()
-//  @ApiProperty()
-//  public case: Case;
+  @ManyToOne(() => Case, (c) => c.followUpNotes)
+  @Exclude()
+  @JoinTable()
+  public case: Case;
 }

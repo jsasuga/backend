@@ -4,10 +4,6 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateSurvivorEvaluationDto {
     @IsNumber()
     @ApiProperty()
-	public readonly caseId: number;
-
-    @IsNumber()
-    @ApiProperty()
 	public readonly violenceType: number;
 
     @IsNumber()

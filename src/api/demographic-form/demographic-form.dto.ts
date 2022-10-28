@@ -25,10 +25,6 @@ export class CreateDemographicFormDto {
     @IsNumber()
     @ApiProperty()
     public readonly userInChargeId: number;
-
-    @IsNumber()
-    @ApiProperty()
-    public readonly caseId: number;
 }
 
 export class UpdateDemographicFormDto {

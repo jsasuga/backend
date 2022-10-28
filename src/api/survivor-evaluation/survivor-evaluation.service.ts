@@ -17,7 +17,6 @@ export class SurvivorEvaluationService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Province) private provinceRepository: Repository<Province>,
     @InjectRepository(Provider) private providerRepository: Repository<Provider>,
-    //@InjectRepository(Case) private caseRepository: Repository<Case>,
   ) {}
   
   public async create(body: CreateSurvivorEvaluationDto): Promise<SurvivorEvaluation> {
@@ -37,10 +36,6 @@ export class SurvivorEvaluationService {
     if (!user) {
       throw new HttpException('Invalid provinceId', HttpStatus.BAD_REQUEST);
     }
-    // let case: Case = await this.caseRepository.findOne(body.caseId);
-    // if (!case) {
-    //  throw new HttpException('Invalid case id', HttpStatus.BAD_REQUEST);
-    // }
 
     object.violenceType = body.violenceType;
     object.place = body.place;
@@ -62,7 +57,6 @@ export class SurvivorEvaluationService {
     object.userInCharge = user;
     object.provider = provider;
     object.province = province;
-    // object.case = case;
 
     return this.repository.save(object);
   }

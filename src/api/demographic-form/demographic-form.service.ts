@@ -13,7 +13,6 @@ export class DemographicFormService {
 
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    //@InjectRepository(Case) private caseRepository: Repository<Case>,
   ) {}
   
   public async create(body: CreateDemographicFormDto): Promise<DemographicForm> {
@@ -23,11 +22,6 @@ export class DemographicFormService {
     if (!user) {
       throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
     }
-   
-    // let case: Case = await this.caseRepository.findOne(body.caseId);
-    // if (!case) {
-    //  throw new HttpException('Invalid case id', HttpStatus.BAD_REQUEST);
-    // }
 
     demographicForm.participation = body.participation;
     demographicForm.commitment = body.commitment;
@@ -35,7 +29,6 @@ export class DemographicFormService {
     demographicForm.description = body.description;
 
     demographicForm.userInCharge = user;
-    // demographicForm.case = body.participation;
 
     return this.repository.save(demographicForm);
   }
