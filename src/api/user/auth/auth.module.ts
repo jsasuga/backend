@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './auth.strategy';
 import { ConfigService } from '@nestjs/config';
 import { Role } from '@/api/role/role.entity';
+import { Provider } from '@/api/provider/provider.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Role } from '@/api/role/role.entity';
         signOptions: { expiresIn: config.get('JWT_EXPIRES') },
       }),
     }),
-    TypeOrmModule.forFeature([User, Role]),
+    TypeOrmModule.forFeature([User, Role, Provider]),
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthHelper, JwtStrategy],

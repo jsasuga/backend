@@ -23,6 +23,8 @@ async function bootstrap() {
     .addTag('service-type')
     .addTag('province')
     .addTag('provider-areas')
+    .addTag('victim')
+    .addTag('demographic-form')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('', app, document);

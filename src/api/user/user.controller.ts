@@ -50,4 +50,16 @@ export class UserController {
   private fetch(@Param('id') id: string, @Req() req: Request): Promise<User | never> {
     return this.service.fetch(id);
   }
+
+  @Get('provider/:providerId')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: User,
+    isArray: true,
+  })
+  private listByProviderId(@Param('providerId') id: string, @Req() req: Request): Promise<Array<User> | never> {
+    return this.service.listByProviderId(id);
+  }
 }

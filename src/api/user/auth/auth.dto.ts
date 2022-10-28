@@ -21,6 +21,11 @@ export class RegisterDto {
   @IsNumber()
   @ApiProperty()
   public readonly roleId: number;
+
+  @IsNumber()
+  @ApiProperty()
+  @IsOptional()
+  public readonly providerId?: number;
 }
 
 export class LoginDto {

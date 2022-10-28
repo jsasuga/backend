@@ -2,6 +2,7 @@ import { Exclude } from 'class-transformer';
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../role/role.entity';
+import { Provider } from '../provider/provider.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -32,4 +33,8 @@ export class User extends BaseEntity {
   @ManyToOne(() => Role)
   @ApiProperty()
   public role: Role;
+
+  @ManyToOne(() => Provider)
+  @ApiProperty()
+  public provider: Provider;
 }

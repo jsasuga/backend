@@ -20,13 +20,24 @@ export class UserService {
 
   public async list(req: Request): Promise<Array<User>> {
     return this.repository.find({
-      relations: ["role"]
+      relations: ["role", "provider"]
     });
   }
 
   public async fetch(id: string): Promise<User> {
     return this.repository.findOne(id, {
-      relations: ["role", "role.permissions"]
+      relations: ["role", "role.permissions", "provider"]
     });
+  }
+
+  public async listByProviderId(providerId: string): Promise<Array<User>> {
+    return this.repository.find({
+      relations: ["role", "provider"],
+      where: [{
+        provider: {
+          id: providerId
+        }
+      }]
+    })
   }
 }
