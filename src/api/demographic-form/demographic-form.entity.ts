@@ -9,19 +9,19 @@ export class DemographicForm extends BaseEntity {
   @ApiProperty()
   public id!: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public participation: string;
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
   public commitment: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public comments: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public description: string;
 

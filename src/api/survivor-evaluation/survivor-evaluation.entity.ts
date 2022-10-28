@@ -11,7 +11,7 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public id!: number;
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
   public violenceType: number;
 
@@ -25,75 +25,75 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public provider: Provider
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public place: string;
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
   public phase: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public security: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public securityNotes: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public legalProtection: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public legalProtectionNotes: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public mentalWelfare: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public mentalWelfareNotes: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public financial: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public financialNotes: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public social: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public socialNotes: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public physical: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public physicalNotes: string;
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
   public total: number;
 
-  @Column({ type: 'integer'})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
   public survivorStatus: number;
 
-  @Column({ type: 'timestamp'})
+  @Column({ type: 'timestamp', nullable: true})
   @ApiProperty()
   public createdAt: Date;
 
-  @Column({ type: 'timestamp'})
+  @Column({ type: 'timestamp', nullable: true})
   @ApiProperty()
   public completedAt: Date;
 

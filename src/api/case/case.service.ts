@@ -57,6 +57,7 @@ export class CaseService {
     victim.children = body.children;
     victim.originAddress = body.originAddress;
     victim.originCountry = body.originCountry;
+    victim.currentAddress = body.currentAddress;
     victim.phoneNumber = body.phoneNumber;
     victim.preferredLanguage = body.preferredLanguage;
     victim.genre = body.genre;
@@ -113,6 +114,8 @@ export class CaseService {
     object.socialNotes = body.socialNotes;
     object.physical = body.physical;
     object.physicalNotes = body.physicalNotes;
+    object.financial = body.financial;
+    object.financialNotes = body.financialNotes;
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();

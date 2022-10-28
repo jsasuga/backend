@@ -14,7 +14,7 @@ export class Case extends BaseEntity {
   @ApiProperty()
   public id!: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public description: string;
 
@@ -33,7 +33,7 @@ export class Case extends BaseEntity {
   @ApiProperty()
   public userInCharge: User;
 
-  @Column({ type: 'boolean'})
+  @Column({ type: 'boolean', nullable: true})
   @ApiProperty()
   public consent: boolean;
 

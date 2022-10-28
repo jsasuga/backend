@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSurvivorEvaluationDto {
@@ -152,7 +152,7 @@ export class UpdateSurvivorEvaluationDto {
     @ApiProperty()
 	public readonly survivorStatus: number;
 
-    @IsDate()
+    @IsDateString()
     @ApiProperty()
-	public readonly completedAt: Date;
+	public readonly completedAt: string;
 }

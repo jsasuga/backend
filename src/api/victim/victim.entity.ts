@@ -7,7 +7,7 @@ export class Victim extends BaseEntity {
   @ApiProperty()
   public id!: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public name!: string;
 
@@ -15,59 +15,59 @@ export class Victim extends BaseEntity {
   @ApiProperty()
   public otherName: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', nullable: true })
   @ApiProperty()
   public age: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public verifiedAge: number;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   @ApiProperty()
-  public birthday: Date;
+  public birthday: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public citizenship: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public ethnicity: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public nationality: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', nullable: true })
   @ApiProperty()
   public maritalStatus: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', nullable: true })
   @ApiProperty()
   public children: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public originAddress: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public originCountry: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public currentAddress: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public phoneNumber: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public preferredLanguage: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', nullable: true })
   @ApiProperty()
   public genre: number;
 }

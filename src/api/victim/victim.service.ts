@@ -34,6 +34,7 @@ export class VictimService {
     victim.children = body.children;
     victim.originAddress = body.originAddress;
     victim.originCountry = body.originCountry;
+    victim.currentAddress = body.currentAddress;
     victim.phoneNumber = body.phoneNumber;
     victim.preferredLanguage = body.preferredLanguage;
     victim.genre = body.genre;
@@ -67,6 +68,7 @@ export class VictimService {
     victim.children = body.children ? body.children : victim.children;
     victim.originAddress = body.originAddress ? body.originAddress : victim.originAddress;
     victim.originCountry = body.originCountry ? body.originCountry : victim.originCountry;
+    victim.currentAddress = body.currentAddress ? body.currentAddress : victim.currentAddress;
     victim.phoneNumber = body.phoneNumber ? body.phoneNumber : victim.phoneNumber;
     victim.preferredLanguage = body.preferredLanguage ? body.preferredLanguage : victim.preferredLanguage;
     victim.genre = body.genre ? body.genre : victim.genre;

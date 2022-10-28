@@ -10,35 +10,35 @@ export class FollowUpNote extends BaseEntity {
   @ApiProperty()
   public id!: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public description: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public victimThoughts: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public observations: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public topics: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public comprehension: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public needs: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public survivorPlan: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public evaluatorPlan: string;
 

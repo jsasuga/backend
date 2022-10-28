@@ -50,6 +50,8 @@ export class SurvivorEvaluationService {
     object.socialNotes = body.socialNotes;
     object.physical = body.physical;
     object.physicalNotes = body.physicalNotes;
+    object.financial = body.financial;
+    object.financialNotes = body.financialNotes;
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();
@@ -90,6 +92,8 @@ export class SurvivorEvaluationService {
     object.socialNotes = body.socialNotes ? body.socialNotes : object.socialNotes;
     object.physical = body.physical ? body.physical : object.physical;
     object.physicalNotes = body.physicalNotes ? body.physicalNotes : object.physicalNotes;
+    object.financial = body.financial ? body.financial : object.financial;
+    object.financialNotes = body.financialNotes ? body.financialNotes : object.financialNotes;
     object.total = body.total ? body.total : object.total;
     object.survivorStatus = body.survivorStatus ? body.survivorStatus : object.survivorStatus;
 
