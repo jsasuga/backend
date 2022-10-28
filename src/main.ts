@@ -27,6 +27,7 @@ async function bootstrap() {
     .addTag('demographic-form')
     .addTag('survivor-evaluation')
     .addTag('attention-protocol')
+    .addTag('follow-up-note')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('', app, document);
