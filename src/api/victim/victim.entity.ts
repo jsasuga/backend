@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Victim extends BaseEntity {
-  @PrimaryColumn('integer', { nullable: false })
+  @PrimaryColumn('bigint', { nullable: false })
   @ApiProperty()
   public id!: number;
 
