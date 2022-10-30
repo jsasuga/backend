@@ -85,7 +85,7 @@ export class CaseService {
     victim.preferredLanguage = body.preferredLanguage ? body.preferredLanguage : victim.preferredLanguage;
     victim.genre = body.genre ? body.genre : victim.genre;
 
-    return this.repository.save(victim);
+    return this.victimRepository.save(victim);
   }
 
   public async createDemographicForm(body: CreateDemographicFormDto): Promise<DemographicForm> {
