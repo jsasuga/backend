@@ -27,9 +27,13 @@ export class RoleService {
   }
 
   public async fetch(id: string): Promise<Role> {
-    return this.repository.findOne(id, {
+    let obj = await this.repository.findOne(id, {
       relations: ["permissions"]
     });
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateRoleDto): Promise<Role> {

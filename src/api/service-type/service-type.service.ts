@@ -24,7 +24,11 @@ export class ServiceTypeService {
   }
 
   public async fetch(id: string): Promise<ServiceType> {
-    return this.repository.findOne(id);
+    let obj = await this.repository.findOne(id);
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateServiceTypeDto): Promise<ServiceType> {

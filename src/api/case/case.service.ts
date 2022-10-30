@@ -198,7 +198,7 @@ export class CaseService {
   }
 
   public async fetch(id: string): Promise<Case> {
-    return this.repository.findOne(id, {
+    let obj = await this.repository.findOne(id, {
       relations: [
         "victim", 
         "provider", 
@@ -212,6 +212,10 @@ export class CaseService {
         "followUpNotes"
       ]
     });
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj;
   }
 
   public async update(id: string, body: UpdateCaseDto): Promise<Case> {

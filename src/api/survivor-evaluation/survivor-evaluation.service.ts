@@ -68,9 +68,13 @@ export class SurvivorEvaluationService {
   }
 
   public async fetch(id: string): Promise<SurvivorEvaluation> {
-    return this.repository.findOne(id, {
+    let obj = await this.repository.findOne(id, {
       relations: ["userInCharge", "provider", "province"]
     });
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateSurvivorEvaluationDto): Promise<SurvivorEvaluation> {

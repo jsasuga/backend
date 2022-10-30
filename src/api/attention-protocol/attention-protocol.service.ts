@@ -47,9 +47,13 @@ export class AttentionProtocolService {
   }
 
   public async fetch(id: string): Promise<AttentionProtocol> {
-    return this.repository.findOne(id, {
+    let obj = await this.repository.findOne(id, {
       relations: ["userInCharge"]
     });
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateAttentionProtocolDto): Promise<AttentionProtocol> {

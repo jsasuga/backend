@@ -73,9 +73,13 @@ export class ProviderService {
   }
 
   public async fetch(id: string): Promise<Provider> {
-    return this.repository.findOne(id, {
+    let obj = await this.repository.findOne(id, {
       relations: ["province", "serviceType", "providerAreas", "branches"]
     });
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateProviderDto): Promise<Provider> {

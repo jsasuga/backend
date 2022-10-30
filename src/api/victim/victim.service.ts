@@ -47,7 +47,11 @@ export class VictimService {
   }
 
   public async fetch(id: string): Promise<Victim> {
-    return this.repository.findOne(id);
+    let obj = await this.repository.findOne(id);
+    if (!obj) {
+      throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
+    }
+    return obj; 
   }
 
   public async update (id: string, body: UpdateVictimDto): Promise<Victim> {
