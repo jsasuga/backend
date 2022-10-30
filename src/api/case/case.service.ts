@@ -194,7 +194,25 @@ export class CaseService {
   }
 
   public async list(req: Request): Promise<Array<Case>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: [
+        "victim", 
+        "provider", 
+        "userInCharge", 
+        "demographicForm", 
+        "demographicForm.userInCharge", 
+        "initialSurvivorEvaluation", 
+        "initialSurvivorEvaluation.userInCharge", 
+        "finalSurvivorEvaluation", 
+        "finalSurvivorEvaluation.userInCharge", 
+        "postSurvivorEvaluation", 
+        "postSurvivorEvaluation.userInCharge", 
+        "attentionProtocol", 
+        "attentionProtocol.userInCharge", 
+        "followUpUserInCharge", 
+        "followUpNotes"
+      ]
+    });
   }
 
   public async fetch(id: string): Promise<Case> {
@@ -204,10 +222,15 @@ export class CaseService {
         "provider", 
         "userInCharge", 
         "demographicForm", 
+        "demographicForm.userInCharge", 
         "initialSurvivorEvaluation", 
+        "initialSurvivorEvaluation.userInCharge", 
         "finalSurvivorEvaluation", 
+        "finalSurvivorEvaluation.userInCharge", 
         "postSurvivorEvaluation", 
+        "postSurvivorEvaluation.userInCharge", 
         "attentionProtocol", 
+        "attentionProtocol.userInCharge", 
         "followUpUserInCharge", 
         "followUpNotes"
       ]
