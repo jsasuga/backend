@@ -5,7 +5,7 @@ export class CreateVictimDto {
   @IsNumber()
   @ApiProperty()
   @IsOptional()
-  public readonly id: number;
+  public readonly id: bigint;
 
   @IsString()
   @ApiProperty()

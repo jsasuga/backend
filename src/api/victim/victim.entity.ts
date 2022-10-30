@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Victim extends BaseEntity {
   @PrimaryColumn('bigint', { nullable: false })
   @ApiProperty()
-  public id!: number;
+  public id!: bigint;
 
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
