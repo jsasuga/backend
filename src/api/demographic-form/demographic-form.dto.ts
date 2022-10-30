@@ -47,4 +47,9 @@ export class UpdateDemographicFormDto {
     @ApiProperty()
     @IsOptional()
     public readonly description?: string;
+
+    @IsNumber()
+    @ApiProperty()
+    @IsOptional()
+    public readonly userInChargeId?: number;
 }

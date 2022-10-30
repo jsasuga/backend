@@ -57,6 +57,14 @@ export class DemographicFormService {
     demographicForm.commitment = body.commitment ? body.commitment : demographicForm.commitment;
     demographicForm.comments = body.comments ? body.comments : demographicForm.comments;
     demographicForm.description = body.description ? body.description : demographicForm.description;
+    
+    if(body.userInChargeId) {
+      let user: User = await this.userRepository.findOne(body.userInChargeId);
+      if (!user) {
+        throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
+      }
+      demographicForm.userInCharge = user;
+    }
 
     return this.repository.save(demographicForm);
   }
