@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, PrimaryColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
@@ -70,4 +70,7 @@ export class Victim extends BaseEntity {
   @Column({ type: 'integer', nullable: true })
   @ApiProperty()
   public genre: number;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
+  public deletedAt?: Date
 }

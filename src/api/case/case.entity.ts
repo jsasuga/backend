@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
 import { Provider } from '../provider/provider.entity';
@@ -71,4 +71,7 @@ export class Case extends BaseEntity {
   @ApiProperty()
   @JoinTable()
   followUpNotes: FollowUpNote[]
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
+  public deletedAt?: Date
 }

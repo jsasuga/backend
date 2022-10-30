@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
 import { Province } from '../province/province.entity';
@@ -169,4 +169,6 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public userInCharge: User
 
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
+  public deletedAt?: Date
 }

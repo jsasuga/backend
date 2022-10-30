@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Module } from '../module/module.entity';
 
@@ -20,4 +20,7 @@ export class Role extends BaseEntity {
   @JoinTable()
   @ApiProperty()
   public permissions: Module[]
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
+  public deletedAt?: Date
 }
