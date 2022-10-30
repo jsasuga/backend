@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateDemographicFormDto {
     @IsString()
@@ -52,4 +52,9 @@ export class UpdateDemographicFormDto {
     @ApiProperty()
     @IsOptional()
     public readonly userInChargeId?: number;
+
+    @IsBoolean()
+    @ApiProperty()
+    @IsOptional()
+    public readonly completed?: boolean;
 }

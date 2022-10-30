@@ -12,7 +12,7 @@ import { DemographicForm } from '../demographic-form/demographic-form.entity';
 import { AttentionProtocol } from '../attention-protocol/attention-protocol.entity';
 import { Province } from '../province/province.entity';
 import { FollowUpNote } from '../follow-up-note/follow-up-note.entity';
-import { CreateVictimDto } from '../victim/victim.dto';
+import { CreateVictimDto, UpdateVictimDto } from '../victim/victim.dto';
 import { CreateDemographicFormDto } from '../demographic-form/demographic-form.dto';
 import { CreateSurvivorEvaluationDto } from '../survivor-evaluation/survivor-evaluation.dto';
 import { CreateAttentionProtocolDto } from '../attention-protocol/attention-protocol.dto';
@@ -38,7 +38,7 @@ export class CaseService {
     let vv: Victim = await this.victimRepository.findOne({ where: { id: body.id } });
 
     if (vv) {
-      return vv;
+      return this.updateVictim(vv.id, body);
     }
     if (!body.id) {
       throw new HttpException('victim id is required', HttpStatus.BAD_REQUEST);
@@ -63,6 +63,29 @@ export class CaseService {
     victim.genre = body.genre;
 
     return this.victimRepository.save(victim);
+  }
+
+  public async updateVictim (id: number, body: UpdateVictimDto): Promise<Victim> {
+    let victim: Victim = await this.victimRepository.findOne(id);
+
+    victim.name = body.name ? body.name : victim.name;
+    victim.otherName = body.otherName ? body.otherName : victim.otherName;
+    victim.age = body.age ? body.age : victim.age;
+    victim.verifiedAge = body.verifiedAge ? body.verifiedAge : victim.verifiedAge;
+    victim.birthday = body.birthday ? body.birthday : victim.birthday;
+    victim.citizenship = body.citizenship ? body.citizenship : victim.citizenship;
+    victim.ethnicity = body.ethnicity ? body.ethnicity : victim.ethnicity;
+    victim.nationality = body.nationality ? body.nationality : victim.nationality;
+    victim.maritalStatus = body.maritalStatus ? body.maritalStatus : victim.maritalStatus;
+    victim.children = body.children ? body.children : victim.children;
+    victim.originAddress = body.originAddress ? body.originAddress : victim.originAddress;
+    victim.originCountry = body.originCountry ? body.originCountry : victim.originCountry;
+    victim.currentAddress = body.currentAddress ? body.currentAddress : victim.currentAddress;
+    victim.phoneNumber = body.phoneNumber ? body.phoneNumber : victim.phoneNumber;
+    victim.preferredLanguage = body.preferredLanguage ? body.preferredLanguage : victim.preferredLanguage;
+    victim.genre = body.genre ? body.genre : victim.genre;
+
+    return this.repository.save(victim);
   }
 
   public async createDemographicForm(body: CreateDemographicFormDto): Promise<DemographicForm> {
@@ -91,38 +114,50 @@ export class CaseService {
       throw new HttpException('Invalid userInChargeId on survivorEvaluation', HttpStatus.BAD_REQUEST);
     }
 
-    let provider: Provider = await this.providerRepository.findOne(body.providerId);
-    if (!user) {
-      throw new HttpException('Invalid providerId on survivorEvaluation', HttpStatus.BAD_REQUEST);
-    }
-
     let province: Province = await this.provinceRepository.findOne(body.provinceId);
-    if (!user) {
+    if (!province) {
       throw new HttpException('Invalid provinceId on survivorEvaluation', HttpStatus.BAD_REQUEST);
     }
 
     object.violenceType = body.violenceType;
     object.place = body.place;
     object.phase = body.phase;
-    object.security = body.security;
+    object.security1 = body.security1;
+    object.security2 = body.security2;
+    object.security3 = body.security3;
     object.securityNotes = body.securityNotes;
-    object.legalProtection = body.legalProtection;
+    object.legalProtection1 = body.legalProtection1;
+    object.legalProtection2 = body.legalProtection2;
+    object.legalProtection3 = body.legalProtection3;
     object.legalProtectionNotes = body.legalProtectionNotes;
-    object.mentalWelfare = body.mentalWelfare;
+    object.mentalWelfare1 = body.mentalWelfare1;
+    object.mentalWelfare2 = body.mentalWelfare2;
+    object.mentalWelfare3 = body.mentalWelfare3;
+    object.mentalWelfare4 = body.mentalWelfare4;
     object.mentalWelfareNotes = body.mentalWelfareNotes;
-    object.social = body.social;
+    object.social1 = body.social1;
+    object.social2 = body.social2;
+    object.social3 = body.social3;
+    object.social4 = body.social4;
     object.socialNotes = body.socialNotes;
-    object.physical = body.physical;
+    object.physical1 = body.physical1;
+    object.physical2 = body.physical2;
+    object.physical3 = body.physical3;
+    object.physical4 = body.physical4;
+    object.physical5 = body.physical5;
     object.physicalNotes = body.physicalNotes;
-    object.financial = body.financial;
+    object.financial1 = body.financial1;
+    object.financial2 = body.financial2;
+    object.financial3 = body.financial3;
+    object.financial4 = body.financial4;
     object.financialNotes = body.financialNotes;
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();
 
     object.userInCharge = user;
-    object.provider = provider;
     object.province = province;
+    object.completed = false;
 
     return this.survivorEvaluationRepository.save(object);
   }

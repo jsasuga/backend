@@ -16,7 +16,6 @@ export class SurvivorEvaluationService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Province) private provinceRepository: Repository<Province>,
-    @InjectRepository(Provider) private providerRepository: Repository<Provider>,
   ) {}
   
   public async create(body: CreateSurvivorEvaluationDto): Promise<SurvivorEvaluation> {
@@ -27,38 +26,50 @@ export class SurvivorEvaluationService {
       throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
     }
 
-    let provider: Provider = await this.providerRepository.findOne(body.providerId);
-    if (!user) {
-      throw new HttpException('Invalid providerId', HttpStatus.BAD_REQUEST);
-    }
-
     let province: Province = await this.provinceRepository.findOne(body.provinceId);
-    if (!user) {
+    if (!province) {
       throw new HttpException('Invalid provinceId', HttpStatus.BAD_REQUEST);
     }
 
     object.violenceType = body.violenceType;
     object.place = body.place;
     object.phase = body.phase;
-    object.security = body.security;
+    object.security1 = body.security1;
+    object.security2 = body.security2;
+    object.security3 = body.security3;
     object.securityNotes = body.securityNotes;
-    object.legalProtection = body.legalProtection;
+    object.legalProtection1 = body.legalProtection1;
+    object.legalProtection2 = body.legalProtection2;
+    object.legalProtection3 = body.legalProtection3;
     object.legalProtectionNotes = body.legalProtectionNotes;
-    object.mentalWelfare = body.mentalWelfare;
+    object.mentalWelfare1 = body.mentalWelfare1;
+    object.mentalWelfare2 = body.mentalWelfare2;
+    object.mentalWelfare3 = body.mentalWelfare3;
+    object.mentalWelfare4 = body.mentalWelfare4;
     object.mentalWelfareNotes = body.mentalWelfareNotes;
-    object.social = body.social;
+    object.social1 = body.social1;
+    object.social2 = body.social2;
+    object.social3 = body.social3;
+    object.social4 = body.social4;
     object.socialNotes = body.socialNotes;
-    object.physical = body.physical;
+    object.physical1 = body.physical1;
+    object.physical2 = body.physical2;
+    object.physical3 = body.physical3;
+    object.physical4 = body.physical4;
+    object.physical5 = body.physical5;
     object.physicalNotes = body.physicalNotes;
-    object.financial = body.financial;
+    object.financial1 = body.financial1;
+    object.financial2 = body.financial2;
+    object.financial3 = body.financial3;
+    object.financial4 = body.financial4;
     object.financialNotes = body.financialNotes;
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();
 
     object.userInCharge = user;
-    object.provider = provider;
     object.province = province;
+    object.completed = false;
 
     return this.repository.save(object);
   }
@@ -69,7 +80,7 @@ export class SurvivorEvaluationService {
 
   public async fetch(id: string): Promise<SurvivorEvaluation> {
     let obj = await this.repository.findOne(id, {
-      relations: ["userInCharge", "provider", "province"]
+      relations: ["userInCharge", "province"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
@@ -86,25 +97,51 @@ export class SurvivorEvaluationService {
     object.violenceType = body.violenceType ? body.violenceType : object.violenceType;
     object.place = body.place ? body.place : object.place;
     object.phase = body.phase ? body.phase : object.phase;
-    object.security = body.security ? body.security : object.security;
+    object.security1 = body.security1 ? body.security1 : object.security1;
+    object.security2 = body.security2 ? body.security2 : object.security2;
+    object.security3 = body.security3 ? body.security3 : object.security3;
     object.securityNotes = body.securityNotes ? body.securityNotes : object.securityNotes;
-    object.legalProtection = body.legalProtection ? body.legalProtection : object.legalProtection;
+    object.legalProtection1 = body.legalProtection1 ? body.legalProtection1 : object.legalProtection1;
+    object.legalProtection2 = body.legalProtection2 ? body.legalProtection2 : object.legalProtection2;
+    object.legalProtection3 = body.legalProtection3 ? body.legalProtection3 : object.legalProtection3;
     object.legalProtectionNotes = body.legalProtectionNotes ? body.legalProtectionNotes : object.legalProtectionNotes;
-    object.mentalWelfare = body.mentalWelfare ? body.mentalWelfare : object.mentalWelfare;
+    object.mentalWelfare1 = body.mentalWelfare1 ? body.mentalWelfare1 : object.mentalWelfare1;
+    object.mentalWelfare2 = body.mentalWelfare2 ? body.mentalWelfare2 : object.mentalWelfare2;
+    object.mentalWelfare3 = body.mentalWelfare3 ? body.mentalWelfare3 : object.mentalWelfare3;
+    object.mentalWelfare4 = body.mentalWelfare4 ? body.mentalWelfare4 : object.mentalWelfare4;
     object.mentalWelfareNotes = body.mentalWelfareNotes ? body.mentalWelfareNotes : object.mentalWelfareNotes;
-    object.social = body.social ? body.social : object.social;
+    object.social1 = body.social1 ? body.social1 : object.social1;
+    object.social2 = body.social2 ? body.social2 : object.social2;
+    object.social3 = body.social3 ? body.social3 : object.social3;
+    object.social4 = body.social4 ? body.social4 : object.social4;
     object.socialNotes = body.socialNotes ? body.socialNotes : object.socialNotes;
-    object.physical = body.physical ? body.physical : object.physical;
+    object.physical1 = body.physical1 ? body.physical1 : object.physical1;
+    object.physical2 = body.physical2 ? body.physical2 : object.physical2;
+    object.physical3 = body.physical3 ? body.physical3 : object.physical3;
+    object.physical4 = body.physical4 ? body.physical4 : object.physical4;
+    object.physical5 = body.physical5 ? body.physical5 : object.physical5;
     object.physicalNotes = body.physicalNotes ? body.physicalNotes : object.physicalNotes;
-    object.financial = body.financial ? body.financial : object.financial;
+    object.financial1 = body.financial1 ? body.financial1 : object.financial1;
+    object.financial2 = body.financial2 ? body.financial2 : object.financial2;
+    object.financial3 = body.financial3 ? body.financial3 : object.financial3;
+    object.financial4 = body.financial4 ? body.financial4 : object.financial4;
     object.financialNotes = body.financialNotes ? body.financialNotes : object.financialNotes;
     object.total = body.total ? body.total : object.total;
     object.survivorStatus = body.survivorStatus ? body.survivorStatus : object.survivorStatus;
 
     if(body.completedAt) {
         object.completedAt = new Date();
+        object.completed = true;
     }
 
+    if(body.userInChargeId) {
+      let user: User = await this.userRepository.findOne(body.userInChargeId);
+      if (!user) {
+        throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
+      }
+      object.userInCharge = user;
+    }
+  
     return this.repository.save(object);
   }
 
@@ -115,7 +152,7 @@ export class SurvivorEvaluationService {
 
   public async listByUserId(userId: string): Promise<Array<SurvivorEvaluation>> {
     return this.repository.find({
-      relations: ["userInCharge", "provider", "province"],
+      relations: ["userInCharge", "province"],
       where: [{
         userInCharge: {
           id: userId

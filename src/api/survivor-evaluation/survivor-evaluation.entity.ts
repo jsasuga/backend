@@ -20,11 +20,6 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public province: Province
 
-  @ManyToOne(() => Provider)
-  @JoinTable()
-  @ApiProperty()
-  public provider: Provider
-
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public place: string;
@@ -33,49 +28,117 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public phase: number;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public security: string;
+  public security1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public security2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public security3: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public securityNotes: string;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public legalProtection: string;
+  public legalProtection1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public legalProtection2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public legalProtection3: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public legalProtectionNotes: string;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public mentalWelfare: string;
+  public mentalWelfare1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public mentalWelfare2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public mentalWelfare3: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public mentalWelfare4: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public mentalWelfareNotes: string;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public financial: string;
+  public financial1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public financial2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public financial3: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public financial4: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public financialNotes: string;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public social: string;
+  public social1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public social2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public social3: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public social4: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public socialNotes: string;
 
-  @Column({ type: 'varchar', nullable: true})
+  @Column({ type: 'integer', nullable: true})
   @ApiProperty()
-  public physical: string;
+  public physical1: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public physical2: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public physical3: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public physical4: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  public physical5: number;
 
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
@@ -96,6 +159,10 @@ export class SurvivorEvaluation extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true})
   @ApiProperty()
   public completedAt: Date;
+
+  @Column({ type: 'boolean', nullable: true})
+  @ApiProperty()
+  public completed: boolean;
 
   @ManyToOne(() => User)
   @JoinTable()

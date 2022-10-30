@@ -30,4 +30,7 @@ export class DemographicForm extends BaseEntity {
   @ApiProperty()
   public userInCharge: User;
 
+  @Column({ type: 'boolean', nullable: true})
+  @ApiProperty()
+  public completed: boolean;
 }
