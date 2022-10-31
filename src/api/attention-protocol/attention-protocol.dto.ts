@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAttentionProtocolDto {
@@ -57,54 +57,67 @@ export class CreateAttentionProtocolDto {
 
 export class UpdateAttentionProtocolDto {
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly data: string;
   
     @IsBoolean()
+    @IsOptional()
     @ApiProperty()
     public readonly confidentiality: boolean;
 
     @IsBoolean()
+    @IsOptional()
     @ApiProperty()
     public readonly consent: boolean;
   
     @IsBoolean()
+    @IsOptional()
     @ApiProperty()
     public readonly treatment: boolean;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly security: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly legalProtection: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly mental: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly financial: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly social: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly physical: string;
    
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly strengths: string;
   
     @IsString()
+    @IsOptional()
     @ApiProperty()
     public readonly comments: string;
 
     @IsBoolean()
+    @IsOptional()
     @ApiProperty()
     public readonly completed: boolean;
 }

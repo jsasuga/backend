@@ -36,6 +36,7 @@ export class AttentionProtocolService {
     object.physical = body.physical;
     object.strengths = body.strengths;
     object.comments = body.comments;
+    object.completed = false;
 
     object.userInCharge = user;
 
