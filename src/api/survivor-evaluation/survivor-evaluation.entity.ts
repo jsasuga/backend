@@ -144,7 +144,7 @@ export class SurvivorEvaluation extends BaseEntity {
   @ApiProperty()
   public physicalNotes: string;
 
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   public total: number;
 
@@ -172,27 +172,27 @@ export class SurvivorEvaluation extends BaseEntity {
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
 
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   securityTotal: number;
 
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   legalProtectionTotal: number;
   
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   mentalWelfareTotal: number;
   
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   financial: number;
   
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   social: number
   
-  @Column({ type: 'integer', nullable: true})
+  @Column({ type: 'decimal', nullable: true})
   @ApiProperty()
   physical: number;
 }
