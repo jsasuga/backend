@@ -355,6 +355,14 @@ export class CaseService {
       object.userInCharge = user;
     }
 
+    if(body.followUpUserInChargeId) {
+      let user: User = await this.userRepository.findOne(body.followUpUserInChargeId);
+      if (!user) {
+        throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
+      }
+      object.followUpUserInCharge = user;
+    }
+
     return this.repository.save(object);
   }
 

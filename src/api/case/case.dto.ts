@@ -53,18 +53,27 @@ export class CreateCaseDto {
 
 export class UpdateCaseDto {
   @IsString()
+  @IsOptional()
   @ApiProperty()
   public readonly description: string;
 
   @IsBoolean()
+  @IsOptional()
   @ApiProperty()
   public readonly consent: boolean;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty()
   public readonly providerId: number;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty()
   public readonly userInChargeId: number;
+
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty()
+  public readonly followUpUserInChargeId: number;
 }

@@ -30,6 +30,10 @@ export class DemographicForm extends BaseEntity {
   @ApiProperty()
   public userInCharge: User;
 
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public completedAt: Date;
+
   @Column({ type: 'boolean', nullable: true})
   @ApiProperty()
   public completed: boolean;

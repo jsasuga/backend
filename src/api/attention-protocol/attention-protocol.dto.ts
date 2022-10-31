@@ -120,4 +120,9 @@ export class UpdateAttentionProtocolDto {
     @IsOptional()
     @ApiProperty()
     public readonly completed: boolean;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly userInChargeId: number;
 }

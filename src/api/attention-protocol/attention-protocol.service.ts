@@ -76,9 +76,17 @@ export class AttentionProtocolService {
     object.strengths = body.strengths ? body.strengths : object.strengths;
     object.comments = body.comments ? body.comments : object.comments;
 
+    object.completed = body.completed;
     if(body.completed) {
       object.completedAt = new Date();
-      object.completed = true;
+    }
+
+    if(body.userInChargeId) {
+      let user: User = await this.userRepository.findOne(body.userInChargeId);
+      if (!user) {
+        throw new HttpException('Invalid userInChargeId', HttpStatus.BAD_REQUEST);
+      }
+      object.userInCharge = user;
     }
 
     return this.repository.save(object);

@@ -58,8 +58,12 @@ export class DemographicFormService {
     demographicForm.commitment = body.commitment ? body.commitment : demographicForm.commitment;
     demographicForm.comments = body.comments ? body.comments : demographicForm.comments;
     demographicForm.description = body.description ? body.description : demographicForm.description;
-    demographicForm.completed = body.completed ? body.completed : false;
+    demographicForm.completed = body.completed ? body.completed : demographicForm.completed;
 
+    if(body.completed) {
+      demographicForm.completedAt = new Date();
+    }
+  
     if(body.userInChargeId) {
       let user: User = await this.userRepository.findOne(body.userInChargeId);
       if (!user) {
