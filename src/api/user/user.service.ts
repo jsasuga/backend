@@ -2,19 +2,15 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
-import { UpdateNameDto, UpdatePasswordDto } from './user.dto';
+import { UpdateNameDto } from './user.dto';
 import { User } from './user.entity';
 import { Role } from '../role/role.entity';
 import { Provider } from '../provider/provider.entity';
-import { AuthHelper } from './auth/auth.helper';
 
 @Injectable()
 export class UserService {
   @InjectRepository(User)
   private readonly repository: Repository<User>;
-
-  @Inject(AuthHelper)
-  private readonly helper: AuthHelper;
 
   constructor(
     @InjectRepository(Role) private roleRepository: Repository<Role>,
@@ -41,14 +37,6 @@ export class UserService {
       }
       user.provider = provider;
     }
-
-    return this.repository.save(user);
-  }
-
-  public async updatePassword(id: string, body: UpdatePasswordDto, req: Request): Promise<User> {
-    const user: User = <User>req.user;
-
-    user.password = this.helper.encodePassword(body.password);
 
     return this.repository.save(user);
   }

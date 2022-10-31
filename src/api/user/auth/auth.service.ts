@@ -6,6 +6,7 @@ import { RegisterDto, LoginDto } from './auth.dto';
 import { AuthHelper } from './auth.helper';
 import { Role } from '@/api/role/role.entity';
 import { Provider } from '@/api/provider/provider.entity';
+import { UpdatePasswordDto } from '../user.dto';
 
 @Injectable()
 export class AuthService {
@@ -72,5 +73,16 @@ export class AuthService {
     this.repository.update(user.id, { lastLoginAt: new Date() });
 
     return this.helper.generateToken(user);
+  }
+  
+  public async updatePassword(id: string, body: UpdatePasswordDto): Promise<User> {
+    let user = await this.repository.findOne(id);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    user.password = this.helper.encodePassword(body.password);
+
+    return this.repository.save(user);
   }
 }

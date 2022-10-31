@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, ClassSerializerInterceptor, UseInterceptors, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Inject, Post, ClassSerializerInterceptor, UseInterceptors, UseGuards, Req, Put, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiResponse,
@@ -9,6 +9,7 @@ import { RegisterDto, LoginDto } from './auth.dto';
 import { JwtAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
+import { UpdatePasswordDto } from '../user.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -44,5 +45,16 @@ export class AuthController {
   })
   private refresh(@Req() { user }: Request): Promise<string | never> {
     return this.service.refresh(<User>user);
+  }
+
+  @Put(':id/password')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: User,
+  })
+  private updatePassword(@Param('id') id: string, @Body() body: UpdatePasswordDto, @Req() req: Request): Promise<User> {
+    return this.service.updatePassword(id, body);
   }
 }

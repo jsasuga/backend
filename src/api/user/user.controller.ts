@@ -28,17 +28,6 @@ export class UserController {
     return this.service.update(id, body, req);
   }
 
-  @Put(':id/password')
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
-  @ApiResponse({
-    status: 200,
-    type: User,
-  })
-  private updatePassword(@Param('id') id: string, @Body() body: UpdatePasswordDto, @Req() req: Request): Promise<User> {
-    return this.service.updatePassword(id, body, req);
-  }
-
   @Get()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
