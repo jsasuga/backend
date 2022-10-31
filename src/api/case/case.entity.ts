@@ -72,6 +72,10 @@ export class Case extends BaseEntity {
   @JoinTable()
   followUpNotes: FollowUpNote[]
 
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public createdAt: Date;
+
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
 }

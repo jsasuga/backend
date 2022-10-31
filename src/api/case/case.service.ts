@@ -231,6 +231,8 @@ export class CaseService {
     object.attentionProtocol = attentionProtocol;
     object.followUpUserInCharge = followUpUserInCharge;
 
+    object.createdAt = new Date();
+  
     return this.repository.save(object);
   }
 
