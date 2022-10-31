@@ -1,19 +1,54 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
-import { UpdateNameDto } from './user.dto';
+import { UpdateNameDto, UpdatePasswordDto } from './user.dto';
 import { User } from './user.entity';
+import { Role } from '../role/role.entity';
+import { Provider } from '../provider/provider.entity';
+import { AuthHelper } from './auth/auth.helper';
 
 @Injectable()
 export class UserService {
   @InjectRepository(User)
   private readonly repository: Repository<User>;
 
-  public async updateName(body: UpdateNameDto, req: Request): Promise<User> {
+  @Inject(AuthHelper)
+  private readonly helper: AuthHelper;
+
+  constructor(
+    @InjectRepository(Role) private roleRepository: Repository<Role>,
+    @InjectRepository(Provider) private providerRepository: Repository<Provider>,
+    ) {}
+
+  public async update(id: string, body: UpdateNameDto, req: Request): Promise<User> {
+    let user = await this.repository.findOne(id);
+
+    user.name = body.name ? body.name : user.name;
+    user.lastName = body.lastName ? body.lastName : user.lastName;
+
+    if(body.roleId) {
+      let role: Role = await this.roleRepository.findOne(body.roleId);
+      if (!role) {
+        throw new HttpException('Invalid role id', HttpStatus.BAD_REQUEST);
+      }
+      user.role = role;
+    }
+    if(body.providerId) {
+      let provider: Provider;
+      if (body.providerId) {
+        provider = await this.providerRepository.findOne(body.providerId);
+      }
+      user.provider = provider;
+    }
+
+    return this.repository.save(user);
+  }
+
+  public async updatePassword(id: string, body: UpdatePasswordDto, req: Request): Promise<User> {
     const user: User = <User>req.user;
 
-    user.name = body.name;
+    user.password = this.helper.encodePassword(body.password);
 
     return this.repository.save(user);
   }

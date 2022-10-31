@@ -6,7 +6,7 @@ import {
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
-import { UpdateNameDto } from './user.dto';
+import { UpdateNameDto, UpdatePasswordDto } from './user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -17,15 +17,26 @@ export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
-  @Put('name')
+  @Put(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
     type: User,
   })
-  private updateName(@Body() body: UpdateNameDto, @Req() req: Request): Promise<User> {
-    return this.service.updateName(body, req);
+  private update(@Param('id') id: string, @Body() body: UpdateNameDto, @Req() req: Request): Promise<User> {
+    return this.service.update(id, body, req);
+  }
+
+  @Put(':id/password')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: User,
+  })
+  private updatePassword(@Param('id') id: string, @Body() body: UpdatePasswordDto, @Req() req: Request): Promise<User> {
+    return this.service.updatePassword(id, body, req);
   }
 
   @Get()
