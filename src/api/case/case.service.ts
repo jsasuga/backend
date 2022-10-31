@@ -250,6 +250,60 @@ export class CaseService {
     });
   }
 
+  public async listByProviderId(providerId: string): Promise<Array<Case>> {
+    return this.repository.find({
+      relations: [
+        "victim", 
+        "provider", 
+        "userInCharge", 
+        "demographicForm", 
+        "demographicForm.userInCharge", 
+        "initialSurvivorEvaluation", 
+        "initialSurvivorEvaluation.userInCharge", 
+        "finalSurvivorEvaluation", 
+        "finalSurvivorEvaluation.userInCharge", 
+        "postSurvivorEvaluation", 
+        "postSurvivorEvaluation.userInCharge", 
+        "attentionProtocol", 
+        "attentionProtocol.userInCharge", 
+        "followUpUserInCharge", 
+        "followUpNotes"
+      ],
+      where: [{
+        provider: {
+          id: providerId
+        }
+      }]
+    })
+  }
+
+  public async listByUserId(userId: string): Promise<Array<Case>> {
+    return this.repository.find({
+      relations: [
+        "victim", 
+        "provider", 
+        "userInCharge", 
+        "demographicForm", 
+        "demographicForm.userInCharge", 
+        "initialSurvivorEvaluation", 
+        "initialSurvivorEvaluation.userInCharge", 
+        "finalSurvivorEvaluation", 
+        "finalSurvivorEvaluation.userInCharge", 
+        "postSurvivorEvaluation", 
+        "postSurvivorEvaluation.userInCharge", 
+        "attentionProtocol", 
+        "attentionProtocol.userInCharge", 
+        "followUpUserInCharge", 
+        "followUpNotes"
+      ],
+      where: [{
+        userInCharge: {
+          id: userId
+        }
+      }]
+    })
+  }
+
   public async fetch(id: string): Promise<Case> {
     let obj = await this.repository.findOne(id, {
       relations: [

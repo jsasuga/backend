@@ -54,6 +54,30 @@ export class CaseController {
     return this.service.fetch(id);
   }
 
+  @Get('user/:userId')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Case,
+    isArray: true,
+  })
+  private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<Case> | never> {
+    return this.service.listByUserId(id);
+  }
+
+  @Get('provider/:providerId')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Case,
+    isArray: true,
+  })
+  private listByProviderId(@Param('providerId') id: string, @Req() req: Request): Promise<Array<Case> | never> {
+    return this.service.listByProviderId(id);
+  }
+
   @Put(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
