@@ -103,4 +103,8 @@ export class UpdateAttentionProtocolDto {
     @IsString()
     @ApiProperty()
     public readonly comments: string;
+
+    @IsBoolean()
+    @ApiProperty()
+    public readonly completed: boolean;
 }

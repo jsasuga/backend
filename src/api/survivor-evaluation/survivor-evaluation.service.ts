@@ -129,7 +129,7 @@ export class SurvivorEvaluationService {
     object.total = body.total ? body.total : object.total;
     object.survivorStatus = body.survivorStatus ? body.survivorStatus : object.survivorStatus;
 
-    if(body.completedAt) {
+    if(body.completed) {
         object.completedAt = new Date();
         object.completed = true;
     }

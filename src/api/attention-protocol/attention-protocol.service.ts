@@ -75,6 +75,11 @@ export class AttentionProtocolService {
     object.strengths = body.strengths ? body.strengths : object.strengths;
     object.comments = body.comments ? body.comments : object.comments;
 
+    if(body.completed) {
+      object.completedAt = new Date();
+      object.completed = true;
+    }
+
     return this.repository.save(object);
   }
 
