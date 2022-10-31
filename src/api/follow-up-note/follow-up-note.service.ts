@@ -38,7 +38,7 @@ export class FollowUpNoteService {
     object.needs = body.needs;
     object.survivorPlan = body.survivorPlan;
     object.evaluatorPlan = body.evaluatorPlan;
-
+    object.createdAt = new Date();
     object.userInCharge = user;
     object.case = case1;
 

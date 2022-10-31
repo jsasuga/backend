@@ -54,4 +54,9 @@ export class FollowUpNote extends BaseEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
+
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public createdAt: Date;
+
 }

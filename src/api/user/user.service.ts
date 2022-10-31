@@ -67,4 +67,9 @@ export class UserService {
       }]
     })
   }
+
+  public async delete (id: string): Promise<User> {
+    let object: User = await this.repository.findOne(id);
+    return object.softRemove();
+  }
 }

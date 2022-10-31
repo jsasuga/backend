@@ -66,6 +66,12 @@ export class SurvivorEvaluationService {
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();
+    object.securityTotal = body.securityTotal;
+    object.legalProtectionTotal = body.legalProtectionTotal;
+    object.mentalWelfareTotal = body.mentalWelfareTotal;
+    object.financial = body.financial;
+    object.social = body.social;
+    object.physical = body.physical;
 
     object.userInCharge = user;
     object.province = province;
@@ -128,7 +134,13 @@ export class SurvivorEvaluationService {
     object.financialNotes = body.financialNotes ? body.financialNotes : object.financialNotes;
     object.total = body.total ? body.total : object.total;
     object.survivorStatus = body.survivorStatus ? body.survivorStatus : object.survivorStatus;
-
+    object.securityTotal = body.securityTotal ? body.securityTotal : object.securityTotal;
+    object.legalProtectionTotal = body.legalProtectionTotal ? body.legalProtectionTotal : object.legalProtectionTotal;
+    object.mentalWelfareTotal = body.mentalWelfareTotal ? body.mentalWelfareTotal : object.mentalWelfareTotal;
+    object.financial = body.financial ? body.financial : object.financial;
+    object.social = body.social ? body.social : object.social;
+    object.physical = body.physical ? body.physical : object.physical;
+  
     object.completed = body.completed;
     if(body.completed) {
         object.completedAt = new Date();

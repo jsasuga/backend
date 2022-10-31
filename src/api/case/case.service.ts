@@ -154,6 +154,12 @@ export class CaseService {
     object.total = body.total;
     object.survivorStatus = body.survivorStatus;
     object.createdAt = new Date();
+    object.securityTotal = body.securityTotal;
+    object.legalProtectionTotal = body.legalProtectionTotal;
+    object.mentalWelfareTotal = body.mentalWelfareTotal;
+    object.financial = body.financial;
+    object.social = body.social;
+    object.physical = body.physical;
 
     object.userInCharge = user;
     object.province = province;

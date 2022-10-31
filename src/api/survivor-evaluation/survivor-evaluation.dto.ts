@@ -145,6 +145,30 @@ export class CreateSurvivorEvaluationDto {
     @IsNumber()
     @ApiProperty()
 	public readonly userInChargeId: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly securityTotal: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly legalProtectionTotal: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly mentalWelfareTotal: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly financial: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly social: number;
+
+    @IsNumber()
+    @ApiProperty()
+	public readonly physical: number;
 }
 
 export class UpdateSurvivorEvaluationDto {
@@ -332,4 +356,34 @@ export class UpdateSurvivorEvaluationDto {
     @IsOptional()
     @ApiProperty()
 	public readonly userInChargeId: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly securityTotal: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly legalProtectionTotal: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly mentalWelfareTotal: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly financial: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly social: number;
+
+    @IsNumber()
+    @IsOptional()
+    @ApiProperty()
+	public readonly physical: number;
 }

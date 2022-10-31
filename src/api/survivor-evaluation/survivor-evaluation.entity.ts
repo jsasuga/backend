@@ -171,4 +171,28 @@ export class SurvivorEvaluation extends BaseEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  securityTotal: number;
+
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  legalProtectionTotal: number;
+  
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  mentalWelfareTotal: number;
+  
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  financial: number;
+  
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  social: number
+  
+  @Column({ type: 'integer', nullable: true})
+  @ApiProperty()
+  physical: number;
 }

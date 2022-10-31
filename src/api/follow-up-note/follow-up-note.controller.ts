@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Post } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Post, Delete } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiResponse,
@@ -71,5 +71,16 @@ export class FollowUpNoteController {
   })
   private listByUserId(@Param('userId') id: string, @Req() req: Request): Promise<Array<FollowUpNote> | never> {
     return this.service.listByUserId(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: FollowUpNote,
+  })
+  async delete(@Param('id') id: string, @Req() req: Request): Promise<FollowUpNote | never> {
+    return this.service.delete(id)
   }
 }
