@@ -9,8 +9,8 @@ import { Provider } from '../provider/provider.entity';
 import { AuthHelper } from './auth/auth.helper';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role, Provider]), AuthModule],
+  imports: [TypeOrmModule.forFeature([User, Role, Provider]), AuthModule, AuthHelper],
   controllers: [UserController],
-  providers: [UserService, AuthHelper],
+  providers: [UserService],
 })
 export class UserModule {}
