@@ -86,7 +86,7 @@ export class SurvivorEvaluationService {
 
   public async fetch(id: string): Promise<SurvivorEvaluation> {
     let obj = await this.repository.findOne(id, {
-      relations: ["userInCharge", "province"]
+      relations: ["userInCharge", "userInCharge.provider", "province"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
@@ -164,7 +164,7 @@ export class SurvivorEvaluationService {
 
   public async listByUserId(userId: string): Promise<Array<SurvivorEvaluation>> {
     return this.repository.find({
-      relations: ["userInCharge", "province"],
+      relations: ["userInCharge", "userInCharge.provider", "province"],
       where: [{
         userInCharge: {
           id: userId

@@ -64,6 +64,10 @@ export class AttentionProtocol extends BaseEntity {
   @ApiProperty()
   public completed: boolean;
 
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public createdAt: Date;
+
   @ManyToOne(() => User)
   @JoinTable()
   @ApiProperty()

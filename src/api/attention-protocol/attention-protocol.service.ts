@@ -37,7 +37,7 @@ export class AttentionProtocolService {
     object.strengths = body.strengths;
     object.comments = body.comments;
     object.completed = false;
-
+    object.createdAt = new Date();
     object.userInCharge = user;
 
     return this.repository.save(object);
@@ -49,7 +49,7 @@ export class AttentionProtocolService {
 
   public async fetch(id: string): Promise<AttentionProtocol> {
     let obj = await this.repository.findOne(id, {
-      relations: ["userInCharge"]
+      relations: ["userInCharge", "userInCharge.provider"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
@@ -99,7 +99,7 @@ export class AttentionProtocolService {
 
   public async listByUserId(userId: string): Promise<Array<AttentionProtocol>> {
     return this.repository.find({
-      relations: ["userInCharge"],
+      relations: ["userInCharge", "userInCharge.provider"],
       where: [{
         userInCharge: {
           id: userId

@@ -102,6 +102,7 @@ export class CaseService {
     demographicForm.description = body.description;
 
     demographicForm.userInCharge = user;
+    demographicForm.createdAt = new Date();
 
     return this.demographicFormRepository.save(demographicForm);
   }
@@ -188,7 +189,7 @@ export class CaseService {
     object.physical = body.physical;
     object.strengths = body.strengths;
     object.comments = body.comments;
-
+    object.createdAt = new Date();
     object.userInCharge = user;
 
     return this.attentionProtocolRepository.save(object);
@@ -246,12 +247,16 @@ export class CaseService {
         "demographicForm.userInCharge", 
         "initialSurvivorEvaluation", 
         "initialSurvivorEvaluation.userInCharge", 
+        "initialSurvivorEvaluation.userInCharge.provider", 
         "finalSurvivorEvaluation", 
         "finalSurvivorEvaluation.userInCharge", 
+        "finalSurvivorEvaluation.userInCharge.provider", 
         "postSurvivorEvaluation", 
         "postSurvivorEvaluation.userInCharge", 
+        "postSurvivorEvaluation.userInCharge.provider", 
         "attentionProtocol", 
         "attentionProtocol.userInCharge", 
+        "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes"
       ]

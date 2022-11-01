@@ -30,6 +30,7 @@ export class DemographicFormService {
     demographicForm.completed = false;
 
     demographicForm.userInCharge = user;
+    demographicForm.createdAt = new Date();
 
     return this.repository.save(demographicForm);
   }
@@ -40,7 +41,7 @@ export class DemographicFormService {
 
   public async fetch(id: string): Promise<DemographicForm> {
     let obj = await this.repository.findOne(id, {
-      relations: ["userInCharge"]
+      relations: ["userInCharge", "userInCharge.provider"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
@@ -82,7 +83,7 @@ export class DemographicFormService {
 
   public async listByUserId(userId: string): Promise<Array<DemographicForm>> {
     return this.repository.find({
-      relations: ["userInCharge"],
+      relations: ["userInCharge", "userInCharge.provider"],
       where: [{
         userInCharge: {
           id: userId

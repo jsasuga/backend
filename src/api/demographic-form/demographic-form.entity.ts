@@ -38,6 +38,10 @@ export class DemographicForm extends BaseEntity {
   @ApiProperty()
   public completed: boolean;
 
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public createdAt: Date;
+
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
 }
