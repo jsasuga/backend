@@ -46,7 +46,9 @@ export class FollowUpNoteService {
   }
 
   public async list(req: Request): Promise<Array<FollowUpNote>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["userInCharge", "userInCharge.provider"]
+    });
   }
 
   public async fetch(id: string): Promise<FollowUpNote> {

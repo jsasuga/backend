@@ -44,7 +44,9 @@ export class AttentionProtocolService {
   }
 
   public async list(req: Request): Promise<Array<AttentionProtocol>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["userInCharge", "userInCharge.provider"]
+    });
   }
 
   public async fetch(id: string): Promise<AttentionProtocol> {

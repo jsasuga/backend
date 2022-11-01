@@ -81,7 +81,9 @@ export class SurvivorEvaluationService {
   }
 
   public async list(req: Request): Promise<Array<SurvivorEvaluation>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["userInCharge", "userInCharge.provider", "province"]
+    });
   }
 
   public async fetch(id: string): Promise<SurvivorEvaluation> {

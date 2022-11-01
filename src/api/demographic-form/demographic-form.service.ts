@@ -36,7 +36,9 @@ export class DemographicFormService {
   }
 
   public async list(req: Request): Promise<Array<DemographicForm>> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["userInCharge", "userInCharge.provider"]
+    });
   }
 
   public async fetch(id: string): Promise<DemographicForm> {
