@@ -296,6 +296,38 @@ export class CaseService {
     })
   }
 
+  public async listByVictimId(victimId: string): Promise<Array<Case>> {
+    return this.repository.find({
+      relations: [
+        "victim", 
+        "provider", 
+        "userInCharge", 
+        "demographicForm", 
+        "demographicForm.userInCharge", 
+        "demographicForm.userInCharge.provider", 
+        "initialSurvivorEvaluation", 
+        "initialSurvivorEvaluation.userInCharge", 
+        "initialSurvivorEvaluation.userInCharge.provider", 
+        "finalSurvivorEvaluation", 
+        "finalSurvivorEvaluation.userInCharge", 
+        "finalSurvivorEvaluation.userInCharge.provider", 
+        "postSurvivorEvaluation", 
+        "postSurvivorEvaluation.userInCharge", 
+        "postSurvivorEvaluation.userInCharge.provider", 
+        "attentionProtocol", 
+        "attentionProtocol.userInCharge", 
+        "attentionProtocol.userInCharge.provider", 
+        "followUpUserInCharge", 
+        "followUpNotes"
+      ],
+      where: [{
+        victim: {
+          id: victimId
+        }
+      }]
+    })
+  }
+
   public async listByUserId(userId: string): Promise<Array<Case>> {
     return this.repository.find({
       relations: [

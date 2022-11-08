@@ -78,6 +78,18 @@ export class CaseController {
     return this.service.listByProviderId(id);
   }
 
+  @Get('victim/:victimId')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Case,
+    isArray: true,
+  })
+  private listByVictimId(@Param('victimId') id: string, @Req() req: Request): Promise<Array<Case> | never> {
+    return this.service.listByVictimId(id);
+  }
+
   @Put(':id')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
