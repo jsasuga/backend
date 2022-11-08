@@ -69,6 +69,29 @@ export class ProviderService {
   }
 
   public async list(req: Request): Promise<Array<Provider>> {
+    let name = ['%', req.query.name, '%'].join('')
+    let province = req.query.province;
+    let service = req.query.service;
+    let area = req.query.area;
+    if(name || province || service || area){
+      let query = this.repository.createQueryBuilder("provider")
+        .leftJoinAndSelect("provider.province", "province")
+        .leftJoinAndSelect("provider.serviceType", "serviceType")
+        .leftJoinAndSelect("provider.providerAreas", "providerAreas");
+      if(name) {
+        query.andWhere("LOWER(provider.name) LIKE LOWER(:name)", {name: name})
+      }
+      if(province) {
+        query.andWhere("province.id = :province", {province: province})
+      }
+      if(service) {
+        query.andWhere("serviceType.id = :serviceType", {serviceType: service})
+      }
+      if(area) {
+        query.andWhere("providerAreas.id = :providerAreas", {providerAreas: area})
+      }
+      return query.getMany();
+    }
     return this.repository.find();
   }
 
