@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { BaseEntity, Column, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../role/role.entity';
 import { Provider } from '../provider/provider.entity';
@@ -39,7 +39,7 @@ export class User extends BaseEntity {
   @ApiProperty()
   public provider: Provider;
 
-  @OneToOne(() => Victim)
+  @ManyToOne(() => Victim)
   @ApiProperty()
   public victim: Victim;
 
