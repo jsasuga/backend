@@ -8,7 +8,6 @@ import * as bcrypt from 'bcryptjs';
 import { User } from '../user/user.entity';
 import { Role } from '../role/role.entity';
 import { Provider } from '../provider/provider.entity';
-import { RegisterDto } from '../user/auth/auth.dto';
 
 @Injectable()
 export class VictimService {
@@ -37,13 +36,13 @@ export class VictimService {
     return bcrypt.hashSync(password, salt);
   }
 
-  public async register(email: string, name: string, victimId: number): Promise<User | never> {
+  public async registerUser(email: string, name: string, victimId: number): Promise<User | never> {
     let password = this.makePassword(10);
     let user: User = await this.userRepository.findOne({ where: { email } });
     let victim: Victim = await this.repository.findOne({ where: { id: victimId } });
     
     if (user) {
-      throw new HttpException('Conflict', HttpStatus.CONFLICT);
+      throw new HttpException('Conflict on victims user', HttpStatus.CONFLICT);
     }
 
     user = new User();
@@ -87,6 +86,19 @@ export class VictimService {
     return this.repository.save(victim);
   }
 
+  public async createNewVictim(body: CreateVictimDto): Promise<Victim> {
+    let victim = await this.create(body);
+    if(!victim) {
+      throw new HttpException('Error creating the victim', HttpStatus.BAD_REQUEST);
+    }
+    let user = await this.registerUser(body.email, body.name, victim.id);
+    if(!user) {
+      throw new HttpException('Error creating the victims user', HttpStatus.BAD_REQUEST);
+    }
+    // process email sending bs for victim to get his pw
+    return victim;
+  }
+  
   public async list(req: Request): Promise<Array<Victim>> {
     return this.repository.find();
   }

@@ -24,7 +24,7 @@ export class VictimController {
     type: Victim,
   })
   private register(@Body() body: CreateVictimDto): Promise<Victim | never> {
-    return this.service.create(body);
+    return this.service.createNewVictim(body);
   }
 
   @Get()

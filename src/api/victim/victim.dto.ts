@@ -13,6 +13,10 @@ export class CreateVictimDto {
   
   @IsString()
   @ApiProperty()
+  public readonly email: string;
+
+  @IsString()
+  @ApiProperty()
   @IsOptional()
   public readonly otherName: string;
   

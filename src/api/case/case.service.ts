@@ -16,6 +16,7 @@ import { CreateVictimDto, UpdateVictimDto } from '../victim/victim.dto';
 import { CreateDemographicFormDto } from '../demographic-form/demographic-form.dto';
 import { CreateSurvivorEvaluationDto } from '../survivor-evaluation/survivor-evaluation.dto';
 import { CreateAttentionProtocolDto } from '../attention-protocol/attention-protocol.dto';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class CaseService {
@@ -33,7 +34,41 @@ export class CaseService {
     @InjectRepository(FollowUpNote) private followUpNoteRepository: Repository<FollowUpNote>,
   ) {}
 
-  public async createVictim(body: CreateVictimDto): Promise<Victim> {
+  private makePassword(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$./!&*';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  private encodePassword(password: string): string {
+    const salt: string = bcrypt.genSaltSync(10);
+
+    return bcrypt.hashSync(password, salt);
+  }
+
+  public async registerUser(email: string, name: string, victimId: number): Promise<User | never> {
+    let password = this.makePassword(10);
+    let user: User = await this.userRepository.findOne({ where: { email } });
+    let victim: Victim = await this.victimRepository.findOne({ where: { id: victimId } });
+    
+    if (user) {
+      throw new HttpException('Conflict on victims user', HttpStatus.CONFLICT);
+    }
+
+    user = new User();
+
+    user.name = name;
+    user.email = email;
+    user.victim = victim;
+    user.password = this.encodePassword(password);
+    return this.userRepository.save(user);
+  }
+
+  public async createVictimObject(body: CreateVictimDto): Promise<Victim> {
     let victim: Victim = new Victim;
     let vv: Victim = await this.victimRepository.findOne({ where: { id: body.id } });
 
@@ -63,6 +98,19 @@ export class CaseService {
     victim.genre = body.genre;
 
     return this.victimRepository.save(victim);
+  }
+
+  public async createVictim(body: CreateVictimDto): Promise<Victim> {
+    let victim = await this.createVictimObject(body);
+    if(!victim) {
+      throw new HttpException('Error creating the victim', HttpStatus.BAD_REQUEST);
+    }
+    let user = await this.registerUser(body.email, body.name, victim.id);
+    if(!user) {
+      throw new HttpException('Error creating the victims user', HttpStatus.BAD_REQUEST);
+    }
+    // process email sending bs for victim to get his pw
+    return victim;
   }
 
   public async updateVictim (id: number, body: UpdateVictimDto): Promise<Victim> {
