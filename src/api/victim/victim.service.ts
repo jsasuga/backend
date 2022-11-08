@@ -4,12 +4,57 @@ import { Repository } from 'typeorm';
 import { Request } from 'express';
 import { Victim } from './victim.entity';
 import { CreateVictimDto, UpdateVictimDto } from './victim.dto';
+import * as bcrypt from 'bcryptjs';
+import { User } from '../user/user.entity';
+import { Role } from '../role/role.entity';
+import { Provider } from '../provider/provider.entity';
+import { RegisterDto } from '../user/auth/auth.dto';
 
 @Injectable()
 export class VictimService {
   @InjectRepository(Victim)
   private readonly repository: Repository<Victim>;
-  
+
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Role) private roleRepository: Repository<Role>,
+    @InjectRepository(Provider) private providerRepository: Repository<Provider>,
+    ) {}
+
+  private makePassword(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$./!&*';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  private encodePassword(password: string): string {
+    const salt: string = bcrypt.genSaltSync(10);
+
+    return bcrypt.hashSync(password, salt);
+  }
+
+  public async register(email: string, name: string, victimId: number): Promise<User | never> {
+    let password = this.makePassword(10);
+    let user: User = await this.userRepository.findOne({ where: { email } });
+    let victim: Victim = await this.repository.findOne({ where: { id: victimId } });
+    
+    if (user) {
+      throw new HttpException('Conflict', HttpStatus.CONFLICT);
+    }
+
+    user = new User();
+
+    user.name = name;
+    user.email = email;
+    user.victim = victim;
+    user.password = this.encodePassword(password);
+    return this.userRepository.save(user);
+  }
+
   public async create(body: CreateVictimDto): Promise<Victim> {
     let victim: Victim = new Victim;
     let vv: Victim = await this.repository.findOne({ where: { id: body.id } });
