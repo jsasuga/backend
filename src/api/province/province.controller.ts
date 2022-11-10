@@ -28,7 +28,6 @@ export class ProvinceController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,

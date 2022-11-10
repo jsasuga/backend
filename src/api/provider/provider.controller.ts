@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Delete, Post } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Delete, Post, Query } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiResponse,
@@ -28,14 +28,19 @@ export class ProviderController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
     type: Provider,
     isArray: true,
   })
-  private list(@Req() req: Request): Promise<Array<Provider> | never> {
+  private list(
+    @Query('name') name: string, 
+    @Query('province') province: string, 
+    @Query('service') service: string, 
+    @Query('area') area: string, 
+    @Req() req: Request
+  ): Promise<Array<Provider> | never> {
     return this.service.list(req);
   }
 
