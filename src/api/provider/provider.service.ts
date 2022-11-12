@@ -77,7 +77,8 @@ export class ProviderService {
       let query = this.repository.createQueryBuilder("provider")
         .leftJoinAndSelect("provider.province", "province")
         .leftJoinAndSelect("provider.serviceType", "serviceType")
-        .leftJoinAndSelect("provider.providerAreas", "providerAreas");
+        .leftJoinAndSelect("provider.providerAreas", "providerAreas")
+        .leftJoinAndSelect("provider.branches", "branch");
       if(name) {
         query.andWhere("LOWER(provider.name) LIKE LOWER(:name)", {name: name})
       }
@@ -92,7 +93,9 @@ export class ProviderService {
       }
       return query.getMany();
     }
-    return this.repository.find();
+    return this.repository.find({
+      relations: ["province", "serviceType", "providerAreas", "branches"]
+    });
   }
 
   public async fetch(id: string): Promise<Provider> {
