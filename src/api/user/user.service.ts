@@ -49,7 +49,7 @@ export class UserService {
 
   public async fetch(id: string): Promise<User> {
     let obj = await this.repository.findOne(id, {
-      relations: ["role", "role.permissions", "provider"]
+      relations: ["role", "role.permissions", "provider", "victim"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);

@@ -52,7 +52,7 @@ export class AuthService {
 
   public async login(body: LoginDto): Promise<string | never> {
     const { email, password }: LoginDto = body;
-    const user: User = await this.repository.findOne({ where: { email }, relations: ["role", "role.permissions", "provider", "victim"] });
+    const user: User = await this.repository.findOne({ where: { email }, relations: ["role", "provider", "victim"] });
 
     if (!user) {
       throw new HttpException('No user found', HttpStatus.NOT_FOUND);
