@@ -56,7 +56,7 @@ export class CaseService {
     let victim: Victim = await this.victimRepository.findOne({ where: { id: victimId } });
     
     if (user) {
-      throw new HttpException('Conflict on victims user', HttpStatus.CONFLICT);
+      return user;
     }
 
     user = new User();

@@ -42,7 +42,7 @@ export class VictimService {
     let victim: Victim = await this.repository.findOne({ where: { id: victimId } });
     
     if (user) {
-      throw new HttpException('Conflict on victims user', HttpStatus.CONFLICT);
+      return user;
     }
 
     user = new User();
