@@ -86,6 +86,11 @@ export class UpdateVictimDto {
   @ApiProperty()
   @IsOptional()
   public readonly name?: string;
+
+  @IsString()
+  @ApiProperty()
+  @IsOptional()
+  public readonly email?: string;
   
   @IsString()
   @ApiProperty()

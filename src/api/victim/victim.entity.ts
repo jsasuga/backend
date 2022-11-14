@@ -10,6 +10,10 @@ export class Victim extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public name!: string;
+  
+  @Column({ type: 'varchar', nullable: false })
+  @ApiProperty()
+  public email: string;
 
   @Column({ type: 'varchar', nullable: true  })
   @ApiProperty()

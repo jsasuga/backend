@@ -67,6 +67,7 @@ export class VictimService {
     
     victim.id = body.id;
     victim.name = body.name;
+    victim.email = body.email;
     victim.otherName = body.otherName;
     victim.age = body.age;
     victim.verifiedAge = body.verifiedAge;
@@ -118,6 +119,7 @@ export class VictimService {
     }
 
     victim.name = body.name ? body.name : victim.name;
+    victim.email = body.email ? body.email : victim.email;
     victim.otherName = body.otherName ? body.otherName : victim.otherName;
     victim.age = body.age ? body.age : victim.age;
     victim.verifiedAge = body.verifiedAge ? body.verifiedAge : victim.verifiedAge;
