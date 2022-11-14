@@ -11,7 +11,7 @@ export class Victim extends BaseEntity {
   @ApiProperty()
   public name!: string;
   
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   @ApiProperty()
   public email: string;
 
