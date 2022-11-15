@@ -41,6 +41,11 @@ export class FollowUpNoteService {
     object.createdAt = new Date();
     object.userInCharge = user;
     object.case = case1;
+    object.completed = body.completed;
+    object.dueDate = body.dueDate;
+    if(body.completed) {
+      object.completedAt = new Date();
+    }
 
     return this.repository.save(object);
   }
@@ -75,7 +80,12 @@ export class FollowUpNoteService {
     object.needs = body.needs ? body.needs : object.needs;
     object.survivorPlan = body.survivorPlan ? body.survivorPlan : object.survivorPlan;
     object.evaluatorPlan = body.evaluatorPlan ? body.evaluatorPlan : object.evaluatorPlan;
-    
+    object.dueDate = body.dueDate ? body.dueDate : object.dueDate;
+    if(body.completed) {
+      object.completed = true;
+      object.completedAt = new Date();
+    }
+
     return this.repository.save(object);
   }
 

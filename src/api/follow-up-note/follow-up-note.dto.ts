@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateFollowUpNoteDto {
     @IsString()
@@ -49,6 +49,16 @@ export class CreateFollowUpNoteDto {
     @IsNumber()
     @ApiProperty()
     public readonly caseId: number;
+
+    @IsDateString()
+    @IsOptional()
+    @ApiProperty()
+    public readonly dueDate: string;
+
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty()
+	public readonly completed: boolean;
 }
 
 export class UpdateFollowUpNoteDto {
@@ -91,4 +101,14 @@ export class UpdateFollowUpNoteDto {
     @ApiProperty()
     @IsOptional()
     public readonly evaluatorPlan?: string;
+
+    @IsDateString()
+    @IsOptional()
+    @ApiProperty()
+    public readonly dueDate: string;
+
+    @IsBoolean()
+    @IsOptional()
+    @ApiProperty()
+	public readonly completed: boolean;
 }

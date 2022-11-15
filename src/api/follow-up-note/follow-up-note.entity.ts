@@ -58,5 +58,16 @@ export class FollowUpNote extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true})
   @ApiProperty()
   public createdAt: Date;
+  
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public dueDate: string;
 
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public completedAt: Date;
+
+  @Column({ type: 'boolean', nullable: true})
+  @ApiProperty()
+  public completed: boolean;
 }
