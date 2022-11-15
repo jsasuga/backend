@@ -311,7 +311,8 @@ export class CaseService {
         "followUpUserInCharge", 
         "followUpNotes",
         "comments",
-        "comments.user"
+        "comments.user",
+        "comments.user.victim"
       ]
     });
   }
@@ -340,7 +341,8 @@ export class CaseService {
         "followUpUserInCharge", 
         "followUpNotes",
         "comments",
-        "comments.user"
+        "comments.user",
+        "comments.user.victim"
       ],
       where: [{
         provider: {
@@ -374,7 +376,8 @@ export class CaseService {
         "followUpUserInCharge", 
         "followUpNotes",
         "comments",
-        "comments.user"
+        "comments.user",
+        "comments.user.victim"
       ],
       where: [{
         victim: {
@@ -408,7 +411,8 @@ export class CaseService {
         "followUpUserInCharge", 
         "followUpNotes",
         "comments",
-        "comments.user"
+        "comments.user",
+        "comments.user.victim"
       ],
       where: [{
         userInCharge: {
@@ -442,7 +446,8 @@ export class CaseService {
         "followUpUserInCharge", 
         "followUpNotes",
         "comments",
-        "comments.user"
+        "comments.user",
+        "comments.user.victim"
       ],
     });
     if (!obj) {
