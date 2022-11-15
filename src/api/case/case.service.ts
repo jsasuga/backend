@@ -310,7 +310,8 @@ export class CaseService {
         "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes",
-        "comments"
+        "comments",
+        "comments.user"
       ]
     });
   }
@@ -338,7 +339,8 @@ export class CaseService {
         "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes",
-        "comments"
+        "comments",
+        "comments.user"
       ],
       where: [{
         provider: {
@@ -371,7 +373,8 @@ export class CaseService {
         "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes",
-        "comments"
+        "comments",
+        "comments.user"
       ],
       where: [{
         victim: {
@@ -404,7 +407,8 @@ export class CaseService {
         "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes",
-        "comments"
+        "comments",
+        "comments.user"
       ],
       where: [{
         userInCharge: {
@@ -437,7 +441,8 @@ export class CaseService {
         "attentionProtocol.userInCharge.provider", 
         "followUpUserInCharge", 
         "followUpNotes",
-        "comments"
+        "comments",
+        "comments.user"
       ],
     });
     if (!obj) {
