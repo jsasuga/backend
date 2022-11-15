@@ -7,6 +7,7 @@ import { DemographicForm } from '../demographic-form/demographic-form.entity';
 import { SurvivorEvaluation } from '../survivor-evaluation/survivor-evaluation.entity';
 import { AttentionProtocol } from '../attention-protocol/attention-protocol.entity';
 import { FollowUpNote } from '../follow-up-note/follow-up-note.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Entity()
 export class Case extends BaseEntity {
@@ -71,6 +72,11 @@ export class Case extends BaseEntity {
   @ApiProperty()
   @JoinTable()
   followUpNotes: FollowUpNote[]
+  
+  @OneToMany(() => Comment, (c) => c.case)
+  @ApiProperty()
+  @JoinTable()
+  comments: Comment[]
 
   @Column({ type: 'timestamp', nullable: true})
   @ApiProperty()

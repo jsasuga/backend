@@ -28,6 +28,7 @@ async function bootstrap() {
     .addTag('survivor-evaluation')
     .addTag('attention-protocol')
     .addTag('follow-up-note')
+    .addTag('comment')
     .addTag('case')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
