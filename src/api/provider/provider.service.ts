@@ -24,16 +24,6 @@ export class ProviderService {
     return province
   }
 
-  private async checkServiceType(serviceTypeId: number) {
-    let serviceType: ServiceType = await this.serviceTypeRepository.findOne(serviceTypeId);
-    return serviceType
-  }
-
-  private async checkProviderAreas(providerAreasId: number) {
-    let providerArea: ProviderAreas = await this.providerAreasRepository.findOne(providerAreasId);
-    return providerArea
-  }
-
   public async create(body: CreateProviderDto): Promise<Provider> {
     let provider: Provider = new Provider;
 
@@ -42,13 +32,23 @@ export class ProviderService {
       throw new HttpException('Invalid province id', HttpStatus.BAD_REQUEST);
     }
 
-    let serviceType: ServiceType = await this.checkServiceType(body.serviceTypeId);
-    if (!serviceType) {
+    const serviceTypeIds: Array<number> = body.serviceTypeIds;
+    let serviceTypePromises = serviceTypeIds.map(p => {
+      let m = this.serviceTypeRepository.findOne(p);
+      return m
+    })
+    const serviceTypes = await Promise.all(serviceTypePromises)
+    if (!serviceTypes) {
       throw new HttpException('Invalid serviceType id', HttpStatus.BAD_REQUEST);
     }
 
-    let providerArea: Province = await this.checkProviderAreas(body.providerAreaId);
-    if (!providerArea) {
+    const providerAreaIds: Array<number> = body.providerAreaIds;
+    let providerAreaPromises = providerAreaIds.map(p => {
+      let m = this.providerAreasRepository.findOne(p);
+      return m
+    })
+    const providerAreas = await Promise.all(providerAreaPromises)
+    if (!providerAreas) {
       throw new HttpException('Invalid providerAreas id', HttpStatus.BAD_REQUEST);
     }
 
@@ -59,8 +59,8 @@ export class ProviderService {
     provider.description = body.description;
 
     provider.province = province;
-    provider.serviceType = serviceType;
-    provider.providerAreas = providerArea;
+    provider.serviceTypes = serviceTypes;
+    provider.providerAreas = providerAreas;
 
     provider.networkInterest = body.networkInterest;
     provider.networkNeeds = body.networkNeeds;
@@ -75,9 +75,11 @@ export class ProviderService {
     let area = req.query.area;
     if(name || province || service || area){
       let query = this.repository.createQueryBuilder("provider")
+        .leftJoin("provider.serviceTypes", "serviceType")
+        .leftJoinAndSelect("provider.serviceTypes", "serviceTypeSelect")
+        .leftJoin("provider.providerAreas", "providerArea")
+        .leftJoinAndSelect("provider.providerAreas", "providerAreaSelect")
         .leftJoinAndSelect("provider.province", "province")
-        .leftJoinAndSelect("provider.serviceType", "serviceType")
-        .leftJoinAndSelect("provider.providerAreas", "providerAreas")
         .leftJoinAndSelect("provider.branches", "branch");
       if(name) {
         query.andWhere("LOWER(provider.name) LIKE LOWER(:name)", {name: name})
@@ -86,21 +88,23 @@ export class ProviderService {
         query.andWhere("province.id = :province", {province: province})
       }
       if(service) {
-        query.andWhere("serviceType.id = :serviceType", {serviceType: service})
+        service = service.toString().split(',')
+        query.andWhere("serviceTypeSelect.id in ( :...serviceType )", {serviceType: service})
       }
       if(area) {
-        query.andWhere("providerAreas.id = :providerAreas", {providerAreas: area})
+        area = area.toString().split(',')
+        query.andWhere("providerAreaSelect.id in ( :...providerAreas )", {providerAreas: area})
       }
       return query.getMany();
     }
     return this.repository.find({
-      relations: ["province", "serviceType", "providerAreas", "branches"]
+      relations: ["province", "serviceTypes", "providerAreas", "branches"]
     });
   }
 
   public async fetch(id: string): Promise<Provider> {
     let obj = await this.repository.findOne(id, {
-      relations: ["province", "serviceType", "providerAreas", "branches"]
+      relations: ["province", "serviceTypes", "providerAreas", "branches"]
     });
     if (!obj) {
       throw new HttpException('Object not found', HttpStatus.NOT_FOUND);
@@ -114,8 +118,6 @@ export class ProviderService {
         throw new HttpException('Invalid provider id', HttpStatus.NOT_FOUND);
     }
     let province: Province;
-    let serviceType: ServiceType;
-    let providerArea: Province;
 
     provider.name = body.name ? body.name : provider.name;
     provider.phoneNumber = body.phoneNumber ? body.phoneNumber : provider.phoneNumber;
@@ -133,21 +135,27 @@ export class ProviderService {
       provider.province = province;
     }
 
-    if(body.serviceTypeId) {
-      serviceType = await this.checkServiceType(body.serviceTypeId);
-      if (!serviceType) {
-        throw new HttpException('Invalid serviceType id', HttpStatus.BAD_REQUEST);
-      }
-      provider.serviceType = serviceType;
+    const serviceTypeIds: Array<number> = body.serviceTypeIds;
+    let serviceTypePromises = serviceTypeIds.map(p => {
+      let m = this.serviceTypeRepository.findOne(p);
+      return m
+    })
+    const serviceTypes = await Promise.all(serviceTypePromises)
+    if (!serviceTypes) {
+      throw new HttpException('Invalid serviceType id', HttpStatus.BAD_REQUEST);
     }
+    provider.serviceTypes = serviceTypes;
 
-    if(body.providerAreaId) {
-      providerArea = await this.checkProviderAreas(body.providerAreaId);
-      if (!providerArea) {
-        throw new HttpException('Invalid providerAreas id', HttpStatus.BAD_REQUEST);
-      }
-      provider.providerAreas = providerArea;
+    const providerAreaIds: Array<number> = body.providerAreaIds;
+    let providerAreaPromises = providerAreaIds.map(p => {
+      let m = this.providerAreasRepository.findOne(p);
+      return m
+    })
+    const providerAreas = await Promise.all(providerAreaPromises)
+    if (!providerAreas) {
+      throw new HttpException('Invalid providerAreas id', HttpStatus.BAD_REQUEST);
     }
+    provider.providerAreas = providerAreas;
 
     return this.repository.save(provider);
   }

@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProviderDto {
@@ -30,13 +30,13 @@ export class CreateProviderDto {
   @ApiProperty()
   public readonly provinceId: number;
 
-  @IsNumber()
+  @IsArray()
   @ApiProperty()
-  public readonly serviceTypeId: number;
+  public readonly serviceTypeIds: Array<number>; 
 
-  @IsNumber()
+  @IsArray()
   @ApiProperty()
-  public readonly providerAreaId: number;
+  public readonly providerAreaIds: Array<number>; 
 
   @IsNumber()
   @ApiProperty()
@@ -80,15 +80,13 @@ export class UpdateProviderDto {
     @IsOptional()
     public readonly provinceId?: number;
 
-    @IsNumber()
+    @IsArray()
     @ApiProperty()
-    @IsOptional()
-    public readonly serviceTypeId?: number;
+    public readonly serviceTypeIds: Array<number>; 
   
-    @IsNumber()
+    @IsArray()
     @ApiProperty()
-    @IsOptional()
-    public readonly providerAreaId?: number;
+    public readonly providerAreaIds: Array<number>; 
   
     @IsNumber()
     @ApiProperty()

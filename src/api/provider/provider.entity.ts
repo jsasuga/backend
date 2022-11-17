@@ -1,4 +1,4 @@
-import { BaseEntity, Column, DeleteDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Province } from '../province/province.entity';
 import { ServiceType } from '../service-type/service-type.entity';
@@ -37,15 +37,15 @@ export class Provider extends BaseEntity {
   @ApiProperty()
   public province: Province
 
-  @ManyToOne(() => ServiceType)
+  @ManyToMany(() => ServiceType)
   @JoinTable()
   @ApiProperty()
-  public serviceType: ServiceType
+  public serviceTypes: ServiceType[];
 
-  @ManyToOne(() => ProviderAreas)
+  @ManyToMany(() => ProviderAreas)
   @JoinTable()
   @ApiProperty()
-  public providerAreas: ProviderAreas
+  public providerAreas: ProviderAreas[];
 
   // Provider network
   @Column({ type: 'integer', nullable: true })
