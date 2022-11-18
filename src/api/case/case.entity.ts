@@ -84,4 +84,24 @@ export class Case extends BaseEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true, select: false })
   public deletedAt?: Date
+
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public code: string;
+
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public completedAt: Date;
+
+  @Column({ type: 'boolean', nullable: true})
+  @ApiProperty()
+  public completed: boolean;
+
+  @Column({ type: 'timestamp', nullable: true})
+  @ApiProperty()
+  public inactiveAt: Date;
+
+  @Column({ type: 'boolean', nullable: true})
+  @ApiProperty()
+  public inactive: boolean;
 }

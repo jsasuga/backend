@@ -281,7 +281,9 @@ export class CaseService {
     object.postSurvivorEvaluation = postSurvivorEvaluation;
     object.attentionProtocol = attentionProtocol;
     object.followUpUserInCharge = followUpUserInCharge;
-
+    object.completed = false;
+    object.inactive = false;
+    object.code = body.code;
     object.createdAt = new Date();
   
     return this.repository.save(object);
@@ -464,6 +466,15 @@ export class CaseService {
 
     object.description = body.description ? body.description : object.description;
     object.consent = body.consent ? body.consent : object.consent;
+    object.code = body.code ? body.code : object.code;
+    object.inactive = "inactive" in body ? body.inactive : object.inactive;
+
+    if(object.inactive) object.inactiveAt = new Date();
+  
+    if(body.completed) {
+      object.completed = true;
+      object.completedAt = new Date();
+    }
 
     if(body.providerId) {
       let provider: Provider = await this.providerRepository.findOne(body.providerId);

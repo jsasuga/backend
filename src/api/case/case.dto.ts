@@ -25,7 +25,11 @@ export class CreateCaseDto {
   @IsBoolean()
   @ApiProperty()
   public readonly consent: boolean;
-  
+
+  @IsString()
+  @ApiProperty()
+  public readonly code: string;
+
   @IsObject()
   @ApiProperty()
   public readonly demographicForm: CreateDemographicFormDto;
@@ -76,4 +80,19 @@ export class UpdateCaseDto {
   @IsOptional()
   @ApiProperty()
   public readonly followUpUserInChargeId: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly code: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty()
+  public readonly completed: boolean;
+  
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty()
+  public readonly inactive: boolean;
 }
