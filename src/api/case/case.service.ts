@@ -253,6 +253,11 @@ export class CaseService {
       throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
     }
     
+    let consentUser: User = await this.userRepository.findOne(body.consentUserInChargeId);
+    if (!consentUser) {
+      throw new HttpException('Invalid consentUserInChargeId in case', HttpStatus.BAD_REQUEST);
+    }
+
     let followUpUserInCharge: User = await this.userRepository.findOne(body.followUpUserInChargeId);
     if (!followUpUserInCharge) {
       throw new HttpException('Invalid followUpUserInChargeId in case', HttpStatus.BAD_REQUEST);
@@ -284,6 +289,7 @@ export class CaseService {
     object.completed = false;
     object.inactive = false;
     object.code = body.code;
+    object.consentUserInCharge = consentUser;
     object.createdAt = new Date();
   
     return this.repository.save(object);
@@ -295,6 +301,7 @@ export class CaseService {
         "victim", 
         "provider", 
         "userInCharge", 
+        "consentUserInCharge", 
         "demographicForm", 
         "demographicForm.userInCharge", 
         "demographicForm.userInCharge.provider", 
@@ -325,6 +332,7 @@ export class CaseService {
         "victim", 
         "provider", 
         "userInCharge", 
+        "consentUserInCharge", 
         "demographicForm", 
         "demographicForm.userInCharge", 
         "demographicForm.userInCharge.provider", 
@@ -360,6 +368,7 @@ export class CaseService {
         "victim", 
         "provider", 
         "userInCharge", 
+        "consentUserInCharge", 
         "demographicForm", 
         "demographicForm.userInCharge", 
         "demographicForm.userInCharge.provider", 
@@ -395,6 +404,7 @@ export class CaseService {
         "victim", 
         "provider", 
         "userInCharge", 
+        "consentUserInCharge", 
         "demographicForm", 
         "demographicForm.userInCharge", 
         "demographicForm.userInCharge.provider", 
@@ -430,6 +440,7 @@ export class CaseService {
         "victim", 
         "provider", 
         "userInCharge", 
+        "consentUserInCharge", 
         "demographicForm", 
         "demographicForm.userInCharge", 
         "demographicForm.userInCharge.provider", 
@@ -490,6 +501,14 @@ export class CaseService {
         throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
       }
       object.userInCharge = user;
+    }
+  
+    if(body.consentUserInChargeId) {
+      let consentUser: User = await this.userRepository.findOne(body.consentUserInChargeId);
+      if (!consentUser) {
+        throw new HttpException('Invalid consentUserInChargeId in case', HttpStatus.BAD_REQUEST);
+      }
+      object.consentUserInCharge = consentUser;
     }
 
     if(body.followUpUserInChargeId) {

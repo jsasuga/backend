@@ -22,6 +22,11 @@ export class CreateCaseDto {
   @ApiProperty()
   public readonly userInChargeId: number;
 
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty()
+  public readonly consentUserInChargeId: number;
+
   @IsBoolean()
   @ApiProperty()
   public readonly consent: boolean;
@@ -75,6 +80,11 @@ export class UpdateCaseDto {
   @IsOptional()
   @ApiProperty()
   public readonly userInChargeId: number;
+
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty()
+  public readonly consentUserInChargeId: number;
 
   @IsNumber()
   @IsOptional()

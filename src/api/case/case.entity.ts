@@ -34,6 +34,11 @@ export class Case extends BaseEntity {
   @ApiProperty()
   public userInCharge: User;
 
+  @ManyToOne(() => User)
+  @JoinTable()
+  @ApiProperty()
+  public consentUserInCharge: User;
+
   @Column({ type: 'boolean', nullable: true})
   @ApiProperty()
   public consent: boolean;
