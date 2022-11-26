@@ -1,38 +1,25 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Backend / API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Este proyecto fue generado utilizando el framework [Nest](https://github.com/nestjs/nest) de Node.js utilizando TypeScript.
 
 ## Installation
 
+El unico requisito de instalacion antes de seguir los siguientes pasos es tener tanto [git](https://git-scm.com/) como [Node.js 18.12.1+](https://nodejs.org/en/) instalados
+
+1. Clonar el repositorio:
+
 ```bash
-$ npm install
+git clone https://github.com/jsasuga/backend.git
+git checkout master
+git pull
 ```
 
-## Running the app
+2. Instalar dependencias
+```bash
+npm install
+```
+
+3. Correr el API
 
 ```bash
 # development
@@ -45,34 +32,61 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Configuraciones
 
-```bash
-# unit tests
-$ npm run test
+Todas las configuraciones estan centralizadas en el archivo `src/common/envs/production.env`
 
-# e2e tests
-$ npm run test:e2e
+Las configuraciones mas importantes de cambiar son las que estan debajo del tag `[database]`, principalmente `host, port, name, user, password`. A su vez tambien cambiar las configuraciones de JWT para un ambiente de produccion
 
-# test coverage
-$ npm run test:cov
+Ejemplo del archivo:
+```env
+PORT=3000
+
+DATABASE_HOST=jelani.db.elephantsql.com
+DATABASE_NAME=qzzeneja
+DATABASE_USER=qzzeneja
+DATABASE_PASSWORD=vZjhmMgeCmGg4SI1Q7s3XO5V2qEiCYfn
+DATABASE_PORT=5432
+
+JWT_KEY=dev
+JWT_EXPIRES=365d
 ```
 
-## Support
+## Estructura del proyecto
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+La carpeta donde se encuentra todo el codigo fuente para trabajar en la aplicacion es `src/api`, esta misma se divide en cada uno de los modulos y cada uno de ellos cuenta con 5 archivos.
 
-## Stay in touch
+* *Controller* - Rutas del api
+* *DTO* - Data Transfer Object para utilizar con el API
+* *Entity* - Modelo que se refleja en la base de datos
+* *Module* - Configuracion de Nest.js
+* *Service* - Servicio que contiene logica del negocio para cada API.
 
--   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
--   Website - [https://nestjs.com](https://nestjs.com/)
--   Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+src
+└── api
+    └── (modules...)
+        └── (object.controller)
+        └── (object.dto)
+        └── (object.entity)
+        └── (object.module)
+        └── (object.service)
+└── common
+    └── env
+    └── helpers
+└── shared
+    └── typeorm
+```
 
-## License
+## Diagrama Entidad Relacion
 
-Nest is [MIT licensed](LICENSE).
+Este es el DER final de la aplicacion
+
+<img src="https://i.imgur.com/COQcVkV.jpg" width="750" height="850" />
 
 ## Docker
+
+La aplicacion tambien se puede correr con [Docker](https://www.docker.com/) para facilitar la instalacion.
 
 ```
 docker build -t relevic-backend .
@@ -80,7 +94,7 @@ docker run -p80:3000 relevic-backend
 docker stop *ps*
 ```
 
-## New Module
+## Comandos para crear nuevos modulos
 
 ```
 nest g mo api/role && nest g co api/role --no-spec && nest g s api/role --no-spec
