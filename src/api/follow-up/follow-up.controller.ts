@@ -1,11 +1,13 @@
 import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Inject, Param, Post, Put, Req, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../user/auth/auth.guard';
 import { CreateFollowUpDto, UpdateFollowUpDto } from './follow-up.dto';
 import { FollowUp } from './follow-up.entity';
 import { FollowUpService } from './follow-up.service';
 
+@ApiBearerAuth()
 @Controller('follow-up')
+@ApiTags('follow-up')
 export class FollowUpController {
   @Inject(FollowUpService)
   private readonly service: FollowUpService;
