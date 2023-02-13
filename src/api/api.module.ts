@@ -14,8 +14,9 @@ import { AttentionProtocolModule } from './attention-protocol/attention-protocol
 import { FollowUpNoteModule } from './follow-up-note/follow-up-note.module';
 import { CaseModule } from './case/case.module';
 import { CommentModule } from './comment/comment.module';
+import { FollowUpModule } from './follow-up/follow-up.module';
 
 @Module({
-  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule, AttentionProtocolModule, FollowUpNoteModule, CaseModule, CommentModule]
+  imports: [UserModule, RoleModule, ModuleModule, ServiceTypeModule, ProvinceModule, ProviderModule, ProviderAreasModule, BranchModule, VictimModule, DemographicFormModule, SurvivorEvaluationModule, AttentionProtocolModule, FollowUpNoteModule, CaseModule, CommentModule, FollowUpModule]
 })
 export class ApiModule {}

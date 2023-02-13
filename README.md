@@ -97,7 +97,7 @@ docker stop *ps*
 ## Comandos para crear nuevos modulos
 
 ```
-nest g mo api/role && nest g co api/role --no-spec && nest g s api/role --no-spec
-touch src/api/role/role.dto.ts
-touch src/api/role/role.entity.ts
+nest g mo api/follow-up && nest g co api/follow-up --no-spec && nest g s api/follow-up --no-spec
+touch src/api/follow-up/follow-up.dto.ts
+touch src/api/follow-up/follow-up.entity.ts
 ```

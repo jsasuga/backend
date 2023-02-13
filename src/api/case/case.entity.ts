@@ -6,6 +6,7 @@ import { Victim } from '../victim/victim.entity';
 import { DemographicForm } from '../demographic-form/demographic-form.entity';
 import { SurvivorEvaluation } from '../survivor-evaluation/survivor-evaluation.entity';
 import { AttentionProtocol } from '../attention-protocol/attention-protocol.entity';
+import { FollowUp } from '../follow-up/follow-up.entity';
 import { FollowUpNote } from '../follow-up-note/follow-up-note.entity';
 import { Comment } from '../comment/comment.entity';
 
@@ -73,6 +74,11 @@ export class Case extends BaseEntity {
   @ApiProperty()
   public followUpUserInCharge: User;
 
+  @OneToMany(() => FollowUp, (fu) => fu.case)
+  @ApiProperty()
+  @JoinTable()
+  followUps: FollowUp[]
+
   @OneToMany(() => FollowUpNote, (fun) => fun.case)
   @ApiProperty()
   @JoinTable()
@@ -109,4 +115,24 @@ export class Case extends BaseEntity {
   @Column({ type: 'boolean', nullable: true})
   @ApiProperty()
   public inactive: boolean;
+
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public jurisdiction: string;
+  
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+	public defendant: string;
+	
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public defendantId: string;
+  
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public proceduralStage: string;
+	
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public legalScore: string;
 }

@@ -27,6 +27,7 @@ async function bootstrap() {
     .addTag('demographic-form')
     .addTag('survivor-evaluation')
     .addTag('attention-protocol')
+    .addTag('follow-up')
     .addTag('follow-up-note')
     .addTag('comment')
     .addTag('case')

@@ -58,6 +58,31 @@ export class CreateCaseDto {
   @IsNumber()
   @ApiProperty()
   public readonly followUpUserInChargeId: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly jurisdiction: string;
+  
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+	public readonly defendant: string;
+	
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly defendantId: string;
+  
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly proceduralStage: string;
+	
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly legalScore: string;
 }
 
 export class UpdateCaseDto {
@@ -105,4 +130,29 @@ export class UpdateCaseDto {
   @IsOptional()
   @ApiProperty()
   public readonly inactive: boolean;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly jurisdiction: string;
+  
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+	public readonly defendant: string;
+	
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly defendantId: string;
+  
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly proceduralStage: string;
+	
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly legalScore: string;
 }

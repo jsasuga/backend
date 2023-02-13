@@ -290,6 +290,11 @@ export class CaseService {
     object.inactive = false;
     object.code = body.code;
     object.consentUserInCharge = consentUser;
+    object.jurisdiction = body.jurisdiction;
+    object.defendant = body.defendant;
+    object.defendantId = body.defendantId;
+    object.proceduralStage = body.proceduralStage;
+    object.legalScore = body.legalScore;
     object.createdAt = new Date();
   
     return this.repository.save(object);
@@ -479,6 +484,11 @@ export class CaseService {
     object.consent = body.consent ? body.consent : object.consent;
     object.code = body.code ? body.code : object.code;
     object.inactive = "inactive" in body ? body.inactive : object.inactive;
+    object.jurisdiction = body.jurisdiction ? body.jurisdiction : object.jurisdiction;
+    object.defendant = body.defendant ? body.defendant : object.defendant;
+    object.defendantId = body.defendantId ? body.defendantId : object.defendantId;
+    object.proceduralStage = body.proceduralStage ? body.proceduralStage : object.proceduralStage;
+    object.legalScore = body.legalScore ? body.legalScore : object.legalScore;
 
     if(object.inactive) object.inactiveAt = new Date();
   
