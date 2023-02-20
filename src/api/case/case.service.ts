@@ -17,6 +17,7 @@ import { CreateDemographicFormDto } from '../demographic-form/demographic-form.d
 import { CreateSurvivorEvaluationDto } from '../survivor-evaluation/survivor-evaluation.dto';
 import { CreateAttentionProtocolDto } from '../attention-protocol/attention-protocol.dto';
 import * as bcrypt from 'bcryptjs';
+import axios from 'axios';
 
 @Injectable()
 export class CaseService {
@@ -32,14 +33,14 @@ export class CaseService {
     @InjectRepository(AttentionProtocol) private attentionProtocolRepository: Repository<AttentionProtocol>,
     @InjectRepository(Province) private provinceRepository: Repository<Province>,
     @InjectRepository(FollowUpNote) private followUpNoteRepository: Repository<FollowUpNote>,
-  ) {}
+  ) { }
 
   private makePassword(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$./!&*';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$./!&*';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
   }
@@ -54,7 +55,7 @@ export class CaseService {
     let password = this.makePassword(10);
     let user: User = await this.userRepository.findOne({ where: { email } });
     let victim: Victim = await this.victimRepository.findOne({ where: { id: victimId } });
-    
+
     if (user) {
       return user;
     }
@@ -78,7 +79,7 @@ export class CaseService {
     if (!body.id) {
       throw new HttpException('victim id is required', HttpStatus.BAD_REQUEST);
     }
-    
+
     victim.id = body.id;
     victim.name = body.name;
     victim.email = body.email;
@@ -103,18 +104,18 @@ export class CaseService {
 
   public async createVictim(body: CreateVictimDto): Promise<Victim> {
     let victim = await this.createVictimObject(body);
-    if(!victim) {
+    if (!victim) {
       throw new HttpException('Error creating the victim', HttpStatus.BAD_REQUEST);
     }
     let user = await this.registerUser(body.email, body.name, victim.id);
-    if(!user) {
+    if (!user) {
       throw new HttpException('Error creating the victims user', HttpStatus.BAD_REQUEST);
     }
     // process email sending bs for victim to get his pw
     return victim;
   }
 
-  public async updateVictim (id: number, body: UpdateVictimDto): Promise<Victim> {
+  public async updateVictim(id: number, body: UpdateVictimDto): Promise<Victim> {
     let victim: Victim = await this.victimRepository.findOne(id);
 
     victim.name = body.name ? body.name : victim.name;
@@ -252,7 +253,7 @@ export class CaseService {
     if (!user) {
       throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
     }
-    
+
     let consentUser: User = await this.userRepository.findOne(body.consentUserInChargeId);
     if (!consentUser) {
       throw new HttpException('Invalid consentUserInChargeId in case', HttpStatus.BAD_REQUEST);
@@ -296,33 +297,33 @@ export class CaseService {
     object.proceduralStage = body.proceduralStage;
     object.legalScore = body.legalScore;
     object.createdAt = new Date();
-  
+
     return this.repository.save(object);
   }
 
   public async list(req: Request): Promise<Array<Case>> {
     return this.repository.find({
       relations: [
-        "victim", 
-        "provider", 
-        "userInCharge", 
-        "consentUserInCharge", 
-        "demographicForm", 
-        "demographicForm.userInCharge", 
-        "demographicForm.userInCharge.provider", 
-        "initialSurvivorEvaluation", 
-        "initialSurvivorEvaluation.userInCharge", 
-        "initialSurvivorEvaluation.userInCharge.provider", 
-        "finalSurvivorEvaluation", 
-        "finalSurvivorEvaluation.userInCharge", 
-        "finalSurvivorEvaluation.userInCharge.provider", 
-        "postSurvivorEvaluation", 
-        "postSurvivorEvaluation.userInCharge", 
-        "postSurvivorEvaluation.userInCharge.provider", 
-        "attentionProtocol", 
-        "attentionProtocol.userInCharge", 
-        "attentionProtocol.userInCharge.provider", 
-        "followUpUserInCharge", 
+        "victim",
+        "provider",
+        "userInCharge",
+        "consentUserInCharge",
+        "demographicForm",
+        "demographicForm.userInCharge",
+        "demographicForm.userInCharge.provider",
+        "initialSurvivorEvaluation",
+        "initialSurvivorEvaluation.userInCharge",
+        "initialSurvivorEvaluation.userInCharge.provider",
+        "finalSurvivorEvaluation",
+        "finalSurvivorEvaluation.userInCharge",
+        "finalSurvivorEvaluation.userInCharge.provider",
+        "postSurvivorEvaluation",
+        "postSurvivorEvaluation.userInCharge",
+        "postSurvivorEvaluation.userInCharge.provider",
+        "attentionProtocol",
+        "attentionProtocol.userInCharge",
+        "attentionProtocol.userInCharge.provider",
+        "followUpUserInCharge",
         "followUpNotes",
         "comments",
         "comments.user",
@@ -335,26 +336,26 @@ export class CaseService {
   public async listByProviderId(providerId: string): Promise<Array<Case>> {
     return this.repository.find({
       relations: [
-        "victim", 
-        "provider", 
-        "userInCharge", 
-        "consentUserInCharge", 
-        "demographicForm", 
-        "demographicForm.userInCharge", 
-        "demographicForm.userInCharge.provider", 
-        "initialSurvivorEvaluation", 
-        "initialSurvivorEvaluation.userInCharge", 
-        "initialSurvivorEvaluation.userInCharge.provider", 
-        "finalSurvivorEvaluation", 
-        "finalSurvivorEvaluation.userInCharge", 
-        "finalSurvivorEvaluation.userInCharge.provider", 
-        "postSurvivorEvaluation", 
-        "postSurvivorEvaluation.userInCharge", 
-        "postSurvivorEvaluation.userInCharge.provider", 
-        "attentionProtocol", 
-        "attentionProtocol.userInCharge", 
-        "attentionProtocol.userInCharge.provider", 
-        "followUpUserInCharge", 
+        "victim",
+        "provider",
+        "userInCharge",
+        "consentUserInCharge",
+        "demographicForm",
+        "demographicForm.userInCharge",
+        "demographicForm.userInCharge.provider",
+        "initialSurvivorEvaluation",
+        "initialSurvivorEvaluation.userInCharge",
+        "initialSurvivorEvaluation.userInCharge.provider",
+        "finalSurvivorEvaluation",
+        "finalSurvivorEvaluation.userInCharge",
+        "finalSurvivorEvaluation.userInCharge.provider",
+        "postSurvivorEvaluation",
+        "postSurvivorEvaluation.userInCharge",
+        "postSurvivorEvaluation.userInCharge.provider",
+        "attentionProtocol",
+        "attentionProtocol.userInCharge",
+        "attentionProtocol.userInCharge.provider",
+        "followUpUserInCharge",
         "followUpNotes",
         "comments",
         "comments.user",
@@ -372,26 +373,26 @@ export class CaseService {
   public async listByVictimId(victimId: string): Promise<Array<Case>> {
     return this.repository.find({
       relations: [
-        "victim", 
-        "provider", 
-        "userInCharge", 
-        "consentUserInCharge", 
-        "demographicForm", 
-        "demographicForm.userInCharge", 
-        "demographicForm.userInCharge.provider", 
-        "initialSurvivorEvaluation", 
-        "initialSurvivorEvaluation.userInCharge", 
-        "initialSurvivorEvaluation.userInCharge.provider", 
-        "finalSurvivorEvaluation", 
-        "finalSurvivorEvaluation.userInCharge", 
-        "finalSurvivorEvaluation.userInCharge.provider", 
-        "postSurvivorEvaluation", 
-        "postSurvivorEvaluation.userInCharge", 
-        "postSurvivorEvaluation.userInCharge.provider", 
-        "attentionProtocol", 
-        "attentionProtocol.userInCharge", 
-        "attentionProtocol.userInCharge.provider", 
-        "followUpUserInCharge", 
+        "victim",
+        "provider",
+        "userInCharge",
+        "consentUserInCharge",
+        "demographicForm",
+        "demographicForm.userInCharge",
+        "demographicForm.userInCharge.provider",
+        "initialSurvivorEvaluation",
+        "initialSurvivorEvaluation.userInCharge",
+        "initialSurvivorEvaluation.userInCharge.provider",
+        "finalSurvivorEvaluation",
+        "finalSurvivorEvaluation.userInCharge",
+        "finalSurvivorEvaluation.userInCharge.provider",
+        "postSurvivorEvaluation",
+        "postSurvivorEvaluation.userInCharge",
+        "postSurvivorEvaluation.userInCharge.provider",
+        "attentionProtocol",
+        "attentionProtocol.userInCharge",
+        "attentionProtocol.userInCharge.provider",
+        "followUpUserInCharge",
         "followUpNotes",
         "comments",
         "comments.user",
@@ -409,26 +410,26 @@ export class CaseService {
   public async listByUserId(userId: string): Promise<Array<Case>> {
     return this.repository.find({
       relations: [
-        "victim", 
-        "provider", 
-        "userInCharge", 
-        "consentUserInCharge", 
-        "demographicForm", 
-        "demographicForm.userInCharge", 
-        "demographicForm.userInCharge.provider", 
-        "initialSurvivorEvaluation", 
-        "initialSurvivorEvaluation.userInCharge", 
-        "initialSurvivorEvaluation.userInCharge.provider", 
-        "finalSurvivorEvaluation", 
-        "finalSurvivorEvaluation.userInCharge", 
-        "finalSurvivorEvaluation.userInCharge.provider", 
-        "postSurvivorEvaluation", 
-        "postSurvivorEvaluation.userInCharge", 
-        "postSurvivorEvaluation.userInCharge.provider", 
-        "attentionProtocol", 
-        "attentionProtocol.userInCharge", 
-        "attentionProtocol.userInCharge.provider", 
-        "followUpUserInCharge", 
+        "victim",
+        "provider",
+        "userInCharge",
+        "consentUserInCharge",
+        "demographicForm",
+        "demographicForm.userInCharge",
+        "demographicForm.userInCharge.provider",
+        "initialSurvivorEvaluation",
+        "initialSurvivorEvaluation.userInCharge",
+        "initialSurvivorEvaluation.userInCharge.provider",
+        "finalSurvivorEvaluation",
+        "finalSurvivorEvaluation.userInCharge",
+        "finalSurvivorEvaluation.userInCharge.provider",
+        "postSurvivorEvaluation",
+        "postSurvivorEvaluation.userInCharge",
+        "postSurvivorEvaluation.userInCharge.provider",
+        "attentionProtocol",
+        "attentionProtocol.userInCharge",
+        "attentionProtocol.userInCharge.provider",
+        "followUpUserInCharge",
         "followUpNotes",
         "comments",
         "comments.user",
@@ -446,26 +447,26 @@ export class CaseService {
   public async fetch(id: string): Promise<Case> {
     let obj = await this.repository.findOne(id, {
       relations: [
-        "victim", 
-        "provider", 
-        "userInCharge", 
-        "consentUserInCharge", 
-        "demographicForm", 
-        "demographicForm.userInCharge", 
-        "demographicForm.userInCharge.provider", 
-        "initialSurvivorEvaluation", 
-        "initialSurvivorEvaluation.userInCharge", 
-        "initialSurvivorEvaluation.userInCharge.provider", 
-        "finalSurvivorEvaluation", 
-        "finalSurvivorEvaluation.userInCharge", 
-        "finalSurvivorEvaluation.userInCharge.provider", 
-        "postSurvivorEvaluation", 
-        "postSurvivorEvaluation.userInCharge", 
-        "postSurvivorEvaluation.userInCharge.provider", 
-        "attentionProtocol", 
-        "attentionProtocol.userInCharge", 
-        "attentionProtocol.userInCharge.provider", 
-        "followUpUserInCharge", 
+        "victim",
+        "provider",
+        "userInCharge",
+        "consentUserInCharge",
+        "demographicForm",
+        "demographicForm.userInCharge",
+        "demographicForm.userInCharge.provider",
+        "initialSurvivorEvaluation",
+        "initialSurvivorEvaluation.userInCharge",
+        "initialSurvivorEvaluation.userInCharge.provider",
+        "finalSurvivorEvaluation",
+        "finalSurvivorEvaluation.userInCharge",
+        "finalSurvivorEvaluation.userInCharge.provider",
+        "postSurvivorEvaluation",
+        "postSurvivorEvaluation.userInCharge",
+        "postSurvivorEvaluation.userInCharge.provider",
+        "attentionProtocol",
+        "attentionProtocol.userInCharge",
+        "attentionProtocol.userInCharge.provider",
+        "followUpUserInCharge",
         "followUpNotes",
         "comments",
         "comments.user",
@@ -482,7 +483,7 @@ export class CaseService {
   public async update(id: string, body: UpdateCaseDto): Promise<Case> {
     let object: Case = await this.repository.findOne(id);
     if (!object) {
-        throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
     }
 
     object.description = body.description ? body.description : object.description;
@@ -495,30 +496,30 @@ export class CaseService {
     object.proceduralStage = body.proceduralStage ? body.proceduralStage : object.proceduralStage;
     object.legalScore = body.legalScore ? body.legalScore : object.legalScore;
 
-    if(object.inactive) object.inactiveAt = new Date();
-  
-    if(body.completed) {
+    if (object.inactive) object.inactiveAt = new Date();
+
+    if (body.completed) {
       object.completed = true;
       object.completedAt = new Date();
     }
 
-    if(body.providerId) {
+    if (body.providerId) {
       let provider: Provider = await this.providerRepository.findOne(body.providerId);
       if (!provider) {
         throw new HttpException('Invalid providerId in case', HttpStatus.BAD_REQUEST);
       }
       object.provider = provider;
     }
-    
-    if(body.userInChargeId) {
+
+    if (body.userInChargeId) {
       let user: User = await this.userRepository.findOne(body.userInChargeId);
       if (!user) {
         throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
       }
       object.userInCharge = user;
     }
-  
-    if(body.consentUserInChargeId) {
+
+    if (body.consentUserInChargeId) {
       let consentUser: User = await this.userRepository.findOne(body.consentUserInChargeId);
       if (!consentUser) {
         throw new HttpException('Invalid consentUserInChargeId in case', HttpStatus.BAD_REQUEST);
@@ -526,7 +527,7 @@ export class CaseService {
       object.consentUserInCharge = consentUser;
     }
 
-    if(body.followUpUserInChargeId) {
+    if (body.followUpUserInChargeId) {
       let user: User = await this.userRepository.findOne(body.followUpUserInChargeId);
       if (!user) {
         throw new HttpException('Invalid userInChargeId in case', HttpStatus.BAD_REQUEST);
@@ -545,7 +546,7 @@ export class CaseService {
   public async addDemographicForm(id: string, body: CreateDemographicFormDto): Promise<Case> {
     let object: Case = await this.repository.findOne(id);
     if (!object) {
-        throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
     }
 
     let demographicForm = await this.createDemographicForm(body);
@@ -557,7 +558,7 @@ export class CaseService {
   public async addAttentionProtocol(id: string, body: CreateAttentionProtocolDto): Promise<Case> {
     let object: Case = await this.repository.findOne(id);
     if (!object) {
-        throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
     }
 
     let attentionProtocol = await this.createAttentionProtocol(body);
@@ -569,13 +570,13 @@ export class CaseService {
   public async addSurvivorEvaluation(id: string, when: string, body: CreateSurvivorEvaluationDto): Promise<Case> {
     let object: Case = await this.repository.findOne(id);
     if (!object) {
-        throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
+      throw new HttpException('Invalid case id', HttpStatus.NOT_FOUND);
     }
 
     let survivorEvaluation = await this.createSurvivorEvaluation(body);
-    
-    switch(when) {
-      case "initial": 
+
+    switch (when) {
+      case "initial":
         object.initialSurvivorEvaluation = survivorEvaluation;
         break;
       case "final":
@@ -590,5 +591,147 @@ export class CaseService {
     }
 
     return this.repository.save(object);
+  }
+
+  public async searchOnSicempAPI(req: Request): Promise<Array<Case>> {
+    try {
+      let caseNumber = req.query.caseNumber;
+      let userIdentification = req.query.userIdentification;
+
+      let body = caseNumber ? this.searchByCaseNumberSicemp(caseNumber.toString()) : this.searchByUserIdentification(userIdentification.toString());
+
+      const response = await axios.post("https://apisicempdemo.pgr.gob.do/api/v1/casos/search", body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if(response.data.data.length > 0){
+        let cases = [];
+
+        response.data.data.forEach(c => {
+          let cs = new Case();
+          let victim = new Victim();
+          if(c.tipoDocumento === 1) {
+            victim.id = c.documento;
+          }
+          victim.name = c.denunciante;
+          cs.code = c.numero_caso;
+          cs.createdAt = c.fecha_creacion;
+          cs.jurisdiction = c.despacho;
+          cs.proceduralStage = c.etapa;
+          cs.victim = victim;
+          cases.push(cs);
+        });
+
+        return cases;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private searchByCaseNumberSicemp(caseNumber: string) {
+    return {
+      "usuarioId": 13139,
+      "busquedaCodigo": 2,
+      "EsCantidad": false,
+      "fechaInicioVacia": true,
+      "fechaFinVacia": true,
+      "Pagina": 1,
+      "CantidadPorPagina": 10,
+      "denuncia": {
+        "numero": caseNumber,
+        "tanda": -1,
+        "tipo_origen": -1,
+        "fuente": -1,
+        "estado": -1,
+        "prioridad": -1,
+        "registrado_por": ""
+      },
+      "ubicacion_hecho": {
+        "provincia": -1,
+        "municipio": -1,
+        "distrito": -1,
+        "ciudad": -1,
+        "sector": -1,
+        "calle": ""
+      },
+      "vinculacion": {
+        "vinculacionId": -1
+      },
+      "personales": {
+        "Tipo_Identificacion": -1,
+        "identificacion": "",
+        "primer_nombre": "",
+        "segundo_apellido": "",
+        "primer_apellido": "",
+        "segundo_nombre": "",
+        "apodo": "",
+        "nacionalidad": -1,
+        "sexo": -1,
+        "estado_civil": -1,
+        "ocupacion": -1
+      },
+      "recinto": {
+        "recintoId": -1
+      },
+      "despachoId": 0,
+      "fechaInicio": "2023-02-06",
+      "fechaFin": "2023-02-06"
+    }
+  }
+
+  private searchByUserIdentification(userIdentification: string) {
+    return {
+      "usuarioId": 13139,
+      "busquedaCodigo": 5,
+      "EsCantidad": false,
+      "fechaInicioVacia": true,
+      "fechaFinVacia": true,
+      "Pagina": 1,
+      "CantidadPorPagina": 10,
+      "denuncia": {
+        "numero": "",
+        "tanda": -1,
+        "tipo_origen": -1,
+        "fuente": -1,
+        "estado": -1,
+        "prioridad": -1,
+        "registrado_por": ""
+      },
+      "ubicacion_hecho": {
+        "provincia": -1,
+        "municipio": -1,
+        "distrito": -1,
+        "ciudad": -1,
+        "sector": -1,
+        "calle": ""
+      },
+      "vinculacion": {
+        "vinculacionId": -1
+      },
+      "personales": {
+        "Tipo_Identificacion": 1,
+        "identificacion": userIdentification,
+        "primer_nombre": "",
+        "segundo_apellido": "",
+        "primer_apellido": "",
+        "segundo_nombre": "",
+        "apodo": "",
+        "nacionalidad": -1,
+        "sexo": -1,
+        "estado_civil": -1,
+        "ocupacion": -1
+      },
+      "recinto": {
+        "recintoId": -1
+      },
+      "despachoId": 0,
+      "fechaInicio": "2023-02-06",
+      "fechaFin": "2023-02-06"
+    }
   }
 }

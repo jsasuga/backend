@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Case } from '../case/case.entity';
 import { CreateFollowUpDto, UpdateFollowUpDto } from './follow-up.dto';
 import { FollowUp } from './follow-up.entity';
+import { Request } from 'express';
 
 @Injectable()
 export class FollowUpService {

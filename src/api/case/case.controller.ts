@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Delete, Post } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Req, UseGuards, UseInterceptors, Put, Get, Body, Inject, Param, Delete, Post, Query } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiParam,
@@ -20,7 +20,7 @@ import { CreateSurvivorEvaluationDto } from '../survivor-evaluation/survivor-eva
 export class CaseController {
   @Inject(CaseService)
   private readonly service: CaseService;
-  
+
   @Post('')
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
@@ -29,6 +29,21 @@ export class CaseController {
   })
   private register(@Body() body: CreateCaseDto): Promise<Case | never> {
     return this.service.create(body);
+  }
+
+  @Get('search')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiResponse({
+    status: 200,
+    type: Case,
+    isArray: true,
+  })
+  private searchOnSicemp(
+    @Query('caseNumber') caseNumber: string,
+    @Query('userIdentification') userIdentification: string,
+    @Req() req: Request
+  ): Promise<Array<Case> | never> {
+    return this.service.searchOnSicempAPI(req);
   }
 
   @Get()
@@ -119,7 +134,7 @@ export class CaseController {
     type: Case,
   })
   private addDemographicForm(
-    @Param('id') id: string, 
+    @Param('id') id: string,
     @Body() body: CreateDemographicFormDto
   ): Promise<Case | never> {
     return this.service.addDemographicForm(id, body);
@@ -132,7 +147,7 @@ export class CaseController {
     type: Case,
   })
   private addAttentionProtocol(
-    @Param('id') id: string, 
+    @Param('id') id: string,
     @Body() body: CreateAttentionProtocolDto
   ): Promise<Case | never> {
     return this.service.addAttentionProtocol(id, body);
@@ -140,14 +155,14 @@ export class CaseController {
 
   @Post('survivor-evaluation/:id/:when')
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiParam({name: 'when', required: true, type: 'string', enum: ['initial', 'final', 'post']})
+  @ApiParam({ name: 'when', required: true, type: 'string', enum: ['initial', 'final', 'post'] })
   @ApiResponse({
     status: 200,
     type: Case,
   })
   private addSurvivorEvaluation(
-    @Param('id') id: string, 
-    @Param('when') when: string, 
+    @Param('id') id: string,
+    @Param('when') when: string,
     @Body() body: CreateSurvivorEvaluationDto
   ): Promise<Case | never> {
     return this.service.addSurvivorEvaluation(id, when, body);
