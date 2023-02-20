@@ -135,4 +135,8 @@ export class Case extends BaseEntity {
   @Column({ type: 'varchar', nullable: true})
   @ApiProperty()
   public legalScore: string;
+  
+  @Column({ type: 'varchar', nullable: true})
+  @ApiProperty()
+  public userCode: string;
 }

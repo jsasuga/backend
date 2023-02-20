@@ -296,6 +296,7 @@ export class CaseService {
     object.defendantId = body.defendantId;
     object.proceduralStage = body.proceduralStage;
     object.legalScore = body.legalScore;
+    object.userCode = body.userCode;
     object.createdAt = new Date();
 
     return this.repository.save(object);
@@ -734,4 +735,5 @@ export class CaseService {
       "fechaFin": "2023-02-06"
     }
   }
+
 }

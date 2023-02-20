@@ -22,6 +22,7 @@ export class UserService {
 
     user.name = body.name ? body.name : user.name;
     user.lastName = body.lastName ? body.lastName : user.lastName;
+    user.userCode = body.userCode ? body.userCode : user.userCode;
 
     if(body.roleId) {
       let role: Role = await this.roleRepository.findOne(body.roleId);

@@ -83,6 +83,11 @@ export class CreateCaseDto {
   @IsOptional()
   @ApiProperty()
   public readonly legalScore: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  public readonly userCode: string;
 }
 
 export class UpdateCaseDto {

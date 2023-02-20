@@ -22,7 +22,7 @@ export class AuthService {
     ) {}
 
   public async register(body: RegisterDto): Promise<User | never> {
-    const { name, email, password }: RegisterDto = body;
+    const { name, email, password, userCode }: RegisterDto = body;
     let user: User = await this.repository.findOne({ where: { email } });
 
     if (user) {
@@ -47,6 +47,7 @@ export class AuthService {
     user.password = this.helper.encodePassword(password);
     user.role = role;
     user.provider = provider;
+    user.userCode = userCode;
     return this.repository.save(user);
   }
 

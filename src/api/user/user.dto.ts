@@ -12,6 +12,11 @@ export class UpdateNameDto {
   @IsOptional()
   public readonly lastName?: string;
 
+  @IsString()
+  @ApiProperty()
+  @IsOptional()
+  public readonly userCode?: string;
+
   @IsNumber()
   @ApiProperty()
   @IsOptional()

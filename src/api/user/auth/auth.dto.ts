@@ -18,6 +18,11 @@ export class RegisterDto {
   @IsOptional()
   public readonly name?: string;
 
+  @IsString()
+  @ApiProperty()
+  @IsOptional()
+  public readonly userCode?: string;
+
   @IsNumber()
   @ApiProperty()
   public readonly roleId: number;
