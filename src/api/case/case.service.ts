@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
@@ -18,6 +18,7 @@ import { CreateSurvivorEvaluationDto } from '../survivor-evaluation/survivor-eva
 import { CreateAttentionProtocolDto } from '../attention-protocol/attention-protocol.dto';
 import * as bcrypt from 'bcryptjs';
 import axios from 'axios';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CaseService {
@@ -33,6 +34,7 @@ export class CaseService {
     @InjectRepository(AttentionProtocol) private attentionProtocolRepository: Repository<AttentionProtocol>,
     @InjectRepository(Province) private provinceRepository: Repository<Province>,
     @InjectRepository(FollowUpNote) private followUpNoteRepository: Repository<FollowUpNote>,
+    @Inject(ConfigService) private config: ConfigService
   ) { }
 
   private makePassword(length) {
@@ -299,6 +301,10 @@ export class CaseService {
     object.userCode = body.userCode;
     object.createdAt = new Date();
 
+    try {
+      this.createSicempCase(object);
+    } catch (error) {
+    }
     return this.repository.save(object);
   }
 
@@ -607,13 +613,13 @@ export class CaseService {
         }
       });
 
-      if(response.data.data.length > 0){
+      if (response.data.data.length > 0) {
         let cases = [];
 
         response.data.data.forEach(c => {
           let cs = new Case();
           let victim = new Victim();
-          if(c.tipoDocumento === 1) {
+          if (c.tipoDocumento === 1) {
             victim.id = c.documento;
           }
           victim.name = c.denunciante;
@@ -736,4 +742,157 @@ export class CaseService {
     }
   }
 
+  private async loginSicemp() {
+    try {
+      const response = await axios.post("https://apisicempdemo.pgr.gob.do/api/v1/usuarios/login", {
+        "username": this.config.get('SICEMP_USER'),
+        "password":  this.config.get('SICEMP_PASSWORD')
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      return response.data.user.data.token;
+    } catch (error) {
+      console.log(error);
+      return "";
+    }
+  }
+
+  private async createSicempCase(_case: Case) {
+    const body = this.buildSicempCase(_case);
+    try {
+      const token = await this.loginSicemp();
+      await axios.post("https://apisicempdemo.pgr.gob.do/api/v1/casos", body, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.log(JSON.stringify(body));
+      console.log(error.response.data);
+
+    }
+  }
+
+  private buildSicempCase(_case: Case) {
+    return {
+      "denuncia": {
+        "generales": {
+          "caso_id": 0,
+          "caso_codigo": 0,
+          "caso_numero": _case.code,
+          "caso_numero_unico": "",
+          "tipo_orden": 1,
+          "sub_fuente": -1,
+          "fuente": 1,
+          "prioridad": 1,
+          "casoPrivacidadId": 2,
+          "estado": 1,
+          "caso_fecha_creacion": _case.createdAt,
+          "caso_fecha": _case.createdAt,
+          "proceso_etapa_id": 1,
+          "recinto_id": 13,
+          "recinto_id_origen": 1,
+          "despacho_id": 5780,
+          "despacho_id_origen": 1,
+          "caso_numero_despacho": "",
+          "expediente_codigo": 1
+        },
+        "hecho": {
+          "fecha": "",
+          "hecho_id": 0,
+          "relato": _case.description,
+          "hora": ""
+        },
+        "lugar_hecho": {
+          "direccion_id": 0,
+          "provincia": -1,
+          "municipio": -1,
+          "ciudad": -1,
+          "distrito": -1,
+          "sector": -1,
+          "calle": "",
+          "numero": "",
+          "puntos_referencias": "",
+          "latitud": "",
+          "longitud": ""
+        },
+        "infracciones": [
+        ]
+      },
+      "denunciante": {
+        "generales": {
+          "tipo_persona": {
+            "id": 1,
+            "descripcion": "Denunciante"
+          },
+          "empresa": "",
+          "empresa_rnc": "",
+          "tipo_documento": 1,
+          "documento": _case.victim.id,
+          "sexo": _case.victim.genre,
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "nombre_completo": _case.victim.name,
+          "apodo": _case.victim.otherName,
+          "nacionalidad": 145,
+          "estado_civil": _case.victim.maritalStatus,
+          "numero_hijos": _case.victim.children,
+          "ocupacion": -1,
+          "religion": -1,
+          "despachoId": -1,
+          "fechaNacimiento": _case.victim.birthday,
+          "personaLee": false,
+          "personaEscribe": false,
+          "personaAlias": "",
+          "edad": _case.victim.age.toString(),
+          "tipoEdad": 1,
+          "referencia": "",
+          "poblacion": 3
+        },
+        "contactos": {
+          "contacto_id": 0,
+          "correo_electronico": _case.victim.email,
+          "facebook": "",
+          "twitter": "",
+          "google": "",
+          "youtube": "",
+          "instagram": "",
+          "otro1": _case.victim.phoneNumber,
+          "otro2": ""
+        },
+        "direccion": {
+          "direccion_id": 0,
+          "provincia": -1,
+          "municipio": -1,
+          "ciudad": -1,
+          "distrito": -1,
+          "sector": -1,
+          "calle": _case.victim.originAddress,
+          "numero": "",
+          "puntos_referencias": "",
+          "latitud": "",
+          "longitud": ""
+        },
+        "telefonos": [
+          {
+            "telefono_id": 0,
+            "numero": _case.victim.phoneNumber,
+            "activo": true,
+            "persona_id": 0,
+            "Tipo_id": 0
+          },
+        ]
+      },
+      "institucion": {
+        "rnc": "",
+        "institucion": ""
+      }
+    }
+  }
 }

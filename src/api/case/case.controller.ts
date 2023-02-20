@@ -32,6 +32,7 @@ export class CaseController {
   }
 
   @Get('search')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({
     status: 200,
