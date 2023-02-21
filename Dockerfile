@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:18.9.1-alpine as builder
 
 RUN  apk add curl bash
 
@@ -9,7 +9,7 @@ USER node
 
 WORKDIR /home/node
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock tsconfig.build.json tsconfig.json ./
 
 RUN yarn --frozen-lockfile
 
@@ -29,15 +29,16 @@ RUN rm -rf node_modules/swagger-ui-dist/*.map
 
 # ---
 
-FROM node:16-alpine
+FROM node:18.9.1-alpine
 
 USER node
 WORKDIR /home/node
 
 COPY --from=builder /home/node/package*.json /home/node/
+COPY --from=builder /home/node/tsconfig* /home/node/
 COPY --from=builder /home/node/yarn.lock /home/node/
 COPY --from=builder /home/node/dist/ /home/node/dist/
 COPY --from=builder /home/node/node_modules/ /home/node/node_modules/
 
 
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:prod"]
