@@ -40,7 +40,7 @@ Las configuraciones mas importantes de cambiar son las que estan debajo del tag 
 
 Ejemplo del archivo:
 ```env
-PORT=3000
+PORT=1938
 
 DATABASE_HOST=jelani.db.elephantsql.com
 DATABASE_NAME=qzzeneja
@@ -90,7 +90,7 @@ La aplicacion tambien se puede correr con [Docker](https://www.docker.com/) para
 
 ```
 docker build -t relevic-backend .
-docker run -p80:3000 relevic-backend
+docker run -p80:1938 relevic-backend
 docker stop *ps*
 ```
 
