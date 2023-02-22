@@ -4,6 +4,10 @@
 cd ~/backend/
 yarn migration:run
 
+echo "-----MIGRATIONS FINISHED RUNNING-----"
+
+
+echo "-----CREATE ADMIN USER-----"
 # register admin user
 curl --request POST \
   --header 'Content-Type: application/json' \
