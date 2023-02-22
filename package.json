@@ -30,8 +30,8 @@
     "migration:create": "yarn run typeorm migration:create -n",
     "migration:migrate": "yarn run typeorm migration:run",
     "migration:revert": "yarn run typeorm migration:revert",
-    "log_backend": "cat serve_prod_daemon.output",
-    "log_tail_backend": "tail -n 1000 -f serve_prod_daemon.output"
+    "log_backend": "cat serve_prod.output",
+    "log_tail_backend": "tail -n 1000 -f serve_prod.output"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
